@@ -1,0 +1,57 @@
+.main-row {
+  padding: 30px 100px;
+}
+.profile {
+  padding: 20px 30px 0px;
+  box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.27);
+  -webkit-box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.27);
+  -moz-box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.27);
+  i {
+    font-size: 30px;
+  }
+  p {
+    font-size: 25px;
+    font-weight: 500;
+  }
+}
+.profile-form {
+  padding: 20px 30px 0px;
+}
+.border-dark {
+  border: 1px solid rgb(177, 176, 176) !important;
+}
+.submit {
+  background-color: rgb(222, 31, 38);
+  color: white;
+}
+.user-name {
+  margin-bottom: 0;
+  font-size: 12px;
+  transform: translateY(-10px);
+}
+.user-name-score {
+  transform: translate(10px, -15px);
+  color: gray;
+}
+.fa-circle-user {
+  color: gray;
+  font-size: 40px !important;
+  transform: translateX(-10px);
+}
+.profile-settings {
+  .col-md-12 {
+    box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.27);
+    -webkit-box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.27);
+    -moz-box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.27);
+  }
+  i {
+    font-size: 20px;
+    margin-right: 5px;
+    padding: 10px;
+  }
+  p {
+    font-size: 20px;
+    margin-top: 5px;
+    font-weight: 500;
+  }
+}

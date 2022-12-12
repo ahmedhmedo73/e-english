@@ -1,0 +1,24 @@
+<div class="row border border-light bg-white" style="margin-right: 0">
+  <div
+    class="col-md-12 d-flex justify-content-between playlists pb-3 box-shadow-bottom"
+  >
+    <div class="col-md-6 d-flex">
+      <img class="playlist-icon me-2" src="assets/icons/playlist.png" alt="" />
+      <p>My PlayLists</p>
+    </div>
+    <div class="col-md-4">
+      <nz-input-group [nzSuffix]="suffixIconSearch">
+        <input type="text" nz-input placeholder="search" />
+      </nz-input-group>
+      <ng-template #suffixIconSearch>
+        <span nz-icon nzType="search"></span>
+      </ng-template>
+    </div>
+  </div>
+  <div
+    class="col-md-12 d-flex justify-content-center align-items-center"
+    style="height: 270px"
+  >
+    <p>You don't have any playlists yet.</p>
+  </div>
+</div>

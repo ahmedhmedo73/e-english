@@ -1,0 +1,25 @@
+.video-row {
+  height: 43px;
+}
+
+.quistion-card {
+  background: rgb(235, 235, 235);
+  .btn {
+    height: 30px;
+  }
+}
+
+.add-video {
+  width: 200px;
+}
+
+.correct-answer {
+  background-color: rgb(80, 236, 80);
+  color: white;
+  border-radius: 3px;
+}
+
+.questions-container {
+  overflow-y: auto;
+  height: 70vh;
+}

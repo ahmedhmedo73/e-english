@@ -1,0 +1,130 @@
+<div class="container my-3 bg-white">
+  <div class="row">
+    <div class="col-md-12 main position-relative">
+      <video>
+        <source src="assets/videos/mov_bbb.mp4" type="video/mp4" />
+      </video>
+      <div class="overlay position-absolute h-100">
+        <a (click)="startVideo('.play')" class="play" *ngIf="!played">
+          <i class="fa-solid fa-circle-play"></i>
+        </a>
+        <a (click)="startVideo('.retry')" class="retry" *ngIf="played">
+          <i class="fas fa-redo"></i>
+        </a>
+      </div>
+    </div>
+    <div class="bottom col-md-12 d-flex justify-content-between">
+      <div class="left">
+        <h3>{{ video?.name }}</h3>
+        <p><span>2,210,154 </span> views</p>
+      </div>
+      <div class="right d-flex">
+        <div class="features d-flex">
+          <img src="assets/icons/addtolist.png" alt="" />
+          <p>add to list</p>
+        </div>
+        <div class="features d-flex">
+          <i class="fa-solid fa-share-nodes"></i>
+          <p>share</p>
+        </div>
+      </div>
+    </div>
+    <!-- *ngIf="played" -->
+    <ng-container>
+      <div class="col-md-12 questions">
+        <h2>Questions</h2>
+        <div
+          class="content my-3 p-3 rounded-2"
+          *ngFor="let question of questions; let i = index"
+        >
+          <h3>{{ question.question }}</h3>
+          <div class="choises row w-100">
+            <div class="choise col-md-6 mb-3">
+              <a
+                (click)="checkMcqAnswer(question, question.answer1, i, 1)"
+                [ngClass]="{
+                  correctAnswer: isCorrect[i] == true && isAnswered[i] == 1,
+                  wrongAnswer: isCorrect[i] == false && isAnswered[i] == 1,
+                  disabledAnswer: isAnswered[i]
+                }"
+              >
+                A) <span>{{ question.answer1 }}</span>
+              </a>
+            </div>
+            <div class="choise col-md-6">
+              <a
+                (click)="checkMcqAnswer(question, question.answer2, i, 2)"
+                [ngClass]="{
+                  correctAnswer: isCorrect[i] == true && isAnswered[i] == 2,
+                  wrongAnswer: isCorrect[i] == false && isAnswered[i] == 2,
+                  disabledAnswer: isAnswered[i]
+                }"
+              >
+                B) <span>{{ question.answer2 }}</span>
+              </a>
+            </div>
+            <div class="choise col-md-6">
+              <a
+                (click)="checkMcqAnswer(question, question.answer3, i, 3)"
+                [ngClass]="{
+                  correctAnswer: isCorrect[i] == true && isAnswered[i] == 3,
+                  wrongAnswer: isCorrect[i] == false && isAnswered[i] == 3,
+                  disabledAnswer: isAnswered[i]
+                }"
+              >
+                C) <span>{{ question.answer3 }}</span>
+              </a>
+            </div>
+            <div class="choise col-md-6">
+              <a
+                (click)="checkMcqAnswer(question, question.answer4, i, 4)"
+                [ngClass]="{
+                  correctAnswer: isCorrect[i] == true && isAnswered[i] == 4,
+                  wrongAnswer: isCorrect[i] == false && isAnswered[i] == 4,
+                  disabledAnswer: isAnswered[i]
+                }"
+              >
+                D) <span>{{ question.answer4 }}</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-12 speeking mb-3">
+        <h2>Speaking test</h2>
+        <p class="text-secondary fs-12">
+          test your speaking skill by clicking the mic and say the sentence
+        </p>
+      </div>
+
+      <div
+        class="col-md-12 qustion speeking position-relative d-flex justify-content-between my-3 rounded-1 align-items-center"
+        *ngFor="let sentence of sentences; let i = index"
+      >
+        <div class="d-flex flex-column">
+          <p>Sentence : {{ sentence.sentence }}</p>
+          <p>Answer : {{ sentencesAnswer[i] }}</p>
+        </div>
+        <i class="fa-solid fa-spinner" *ngIf="loading"></i>
+        <div *ngIf="!loading && currentSentence != i">
+          <i
+            class="fa-solid fa-microphone"
+            (click)="startService(i)"
+            *ngIf="currentSentence != i"
+          ></i>
+          <i
+            class="fa-solid fa-circle-stop"
+            (click)="stop(i)"
+            *ngIf="currentSentence == i"
+          ></i>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+  <app-comment
+    [video_id]="video?.id"
+    [comments]="video?.comments?.$values"
+    (getVideo)="getVideo($event)"
+  ></app-comment>
+</div>

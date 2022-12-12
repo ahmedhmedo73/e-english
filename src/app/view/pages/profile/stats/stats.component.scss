@@ -1,0 +1,15 @@
+.stats {
+  padding: 20px 30px 0px;
+  i {
+    font-size: 30px;
+  }
+  p {
+    font-size: 25px;
+    font-weight: bolder;
+    margin-top: -5px;
+  }
+}
+.stats-table-cotent,
+.stats-table-header {
+  min-width: 100px;
+}

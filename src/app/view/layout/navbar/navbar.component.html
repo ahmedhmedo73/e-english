@@ -1,0 +1,143 @@
+<header class="p-3 border-bottom">
+  <div class="container-fluid">
+    <div class="d-flex flex-wrap align-items-center justify-content-between">
+      <a
+        [routerLink]="['/']"
+        class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none"
+      >
+        <img class="logo" src="assets/img/logo.PNG" alt="" />
+      </a>
+
+      <ul
+        class="nav col-12 col-lg-auto d-flex justify-content-end mb-md-0"
+        *ngIf="!isLogin"
+      >
+        <li class="about">
+          <a [routerLink]="['/AboutUs']">About Us</a>
+        </li>
+        <li>
+          <a class="btn login ms-2" [routerLink]="['/login']">Log in</a>
+        </li>
+        <li>
+          <a
+            class="btn btn-outline-dark ms-2 register"
+            [routerLink]="['/register']"
+            >Register</a
+          >
+        </li>
+      </ul>
+      <ul
+        class="nav col-12 col-lg-auto me-lg-auto mx-5 mb-2 justify-content-center mb-md-0"
+        *ngIf="isLogin"
+      >
+        <li class="play-mode">
+          <p>
+            Beginner
+            <i
+              (click)="showPlaymode = !showPlaymode"
+              class="fa-solid fa-chevron-down mx-1"
+            ></i>
+          </p>
+          <div
+            class="play-mode-list d-flex justify-content-between"
+            [ngStyle]="stylePlayMode()"
+          >
+            <div class="level">
+              <h3>level</h3>
+              <ul>
+                <li><a routerLink="home">Beginner</a></li>
+                <li>Elemntary</li>
+                <li>Intermediate</li>
+                <li>Advanced</li>
+              </ul>
+            </div>
+            <div class="Grammer">
+              <h3>Grammer</h3>
+              <ul>
+                <li>Can</li>
+                <li>Was, Were</li>
+                <li>Why</li>
+              </ul>
+            </div>
+            <div class="kids">
+              <h3>kids</h3>
+              <li>Level 1</li>
+              <li>Level 2</li>
+              <li>Level 3</li>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="counter d-flex mx-4">
+            <img src="assets/biechart1.PNG" alt="" />
+            <div class="content mx-2">
+              <h3>{{ score }}</h3>
+              <p>counter 1</p>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="counter d-flex mx-4">
+            <img src="assets/biechart2.PNG" alt="" />
+            <div class="content mx-2">
+              <h3>12/30</h3>
+              <p>counter 2</p>
+            </div>
+          </div>
+        </li>
+      </ul>
+
+      <div class="dropdown" *ngIf="isLogin">
+        <a
+          href="#"
+          class="d-block link-dark text-decoration-none dropdown-toggle d-flex"
+          id="dropdownUser1"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <img
+            src="https://github.com/mdo.png"
+            alt="mdo"
+            width="32"
+            height="32"
+            class="rounded-circle my-2"
+          />
+          <div class="content mx-2">
+            <h3>user-name</h3>
+            <p>score: 321</p>
+          </div>
+        </a>
+        <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+          <li>
+            <a
+              class="dropdown-item"
+              [routerLink]="['/profile/personal-information']"
+              ><i class="fa-solid fa-user"></i>Profile</a
+            >
+          </li>
+          <li>
+            <a class="dropdown-item" [routerLink]="['/profile/playlists']"
+              ><i class="fa-solid fa-bars"></i> PlayLists</a
+            >
+          </li>
+          <li>
+            <a class="dropdown-item" [routerLink]="['/profile/stats']"
+              ><i class="fa-solid fa-chart-line"></i> Stats</a
+            >
+          </li>
+          <li>
+            <a class="dropdown-item" [routerLink]="['/profile/rank']"
+              ><i class="fa-solid fa-chart-simple"></i> Score & Rank</a
+            >
+          </li>
+          <li><hr class="dropdown-divider" /></li>
+          <li>
+            <a class="dropdown-item" style="cursor: pointer" (click)="signOut()"
+              ><i class="fa-solid fa-right-from-bracket"></i> Sign Out</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>

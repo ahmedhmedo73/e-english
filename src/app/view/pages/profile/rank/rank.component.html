@@ -1,0 +1,43 @@
+<div class="row bg-white" style="margin-right: 0">
+  <div class="col-md-12 border border-light d-flex rank pb-3 box-shadow-bottom">
+    <i class="fa-solid fa-chart-simple me-2"></i>
+    <p>Score & Ranking</p>
+  </div>
+  <div
+    class="col-12 ranks-table-header-container box-shadow-bottom d-flex justify-content-between py-2 px-3"
+  >
+    <div class="d-flex gap-5">
+      <div class="ranks-table-header-rank d-flex justify-content-center">
+        <p class="fw-bold fs-5">Rank</p>
+      </div>
+      <div class="ranks-table-header-user d-flex justify-content-center">
+        <p class="fw-bold fs-5">User</p>
+      </div>
+    </div>
+    <div class="ranks-table-header-score d-flex justify-content-center">
+      <p class="fw-bold fs-5">Score</p>
+    </div>
+  </div>
+  <div
+    class="col-12 ranks-table-cotent-container box-shadow-bottom d-flex justify-content-between py-2 px-3"
+    *ngFor="let rank of ranks"
+  >
+    <div class="d-flex gap-5">
+      <div
+        class="ranks-table-cotent ranks-table-cotent-rank d-flex justify-content-center"
+      >
+        <p>{{ rank.rank }}</p>
+      </div>
+      <div
+        class="ranks-table-cotent ranks-table-cotent-user d-flex justify-content-center"
+      >
+        <p>{{ rank.user }}</p>
+      </div>
+    </div>
+    <div
+      class="ranks-table-cotent ranks-table-cotent-score d-flex justify-content-center"
+    >
+      <p>{{ rank.score }}</p>
+    </div>
+  </div>
+</div>

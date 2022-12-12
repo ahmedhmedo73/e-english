@@ -1,0 +1,151 @@
+<main>
+  <div class="container p-5">
+    <div class="row">
+      <div class="col-md-5 position-relative">
+        <h2>
+          It's easy to learn <br />
+          English. <br />
+          Regsiter Now for Free...
+        </h2>
+        <form
+          class="form-signin align-items-center d-flex flex-column justify-content-center mt-3"
+          [formGroup]="registerForm"
+          (ngSubmit)="register()"
+        >
+          <div class="row">
+            <div class="col-md-6">
+              <div class="col-md-12 my-1">
+                <label for="name" class="form-label">First Name</label>
+                <input
+                  type="text"
+                  id="name"
+                  class="form-control"
+                  formControlName="Fname"
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="col-md-12 my-1">
+                <label for="name" class="form-label">Last Name</label>
+                <input
+                  type="text"
+                  id="name"
+                  class="form-control"
+                  formControlName="Lname"
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="col-md-12 my-1">
+                <label for="name" class="form-label">UserName</label>
+                <input
+                  type="text"
+                  id="name"
+                  class="form-control"
+                  formControlName="username"
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="col-md-12 my-1">
+                <label for="email" class="form-label">email</label>
+                <input
+                  type="text"
+                  id="email"
+                  class="form-control"
+                  formControlName="email"
+                />
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="col-md-12 my-1">
+                <label for="password" class="form-label">Password</label>
+                <input
+                  type="password"
+                  id="password"
+                  class="form-control"
+                  formControlName="password"
+                />
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="col-md-12 my-1">
+                <label for="password" class="form-label">re password</label>
+                <input
+                  type="password"
+                  id="repassword"
+                  class="form-control"
+                  formControlName="repassword"
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="col-md-12 my-1">
+                <label for="age" class="form-label">age</label>
+                <input
+                  type="text"
+                  id="age"
+                  class="form-control"
+                  formControlName="age"
+                />
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="col-md-12 my-1">
+                <label for="gender" class="form-label">gender</label>
+                <input
+                  type="text"
+                  id="gender"
+                  class="form-control"
+                  formControlName="gender"
+                />
+              </div>
+            </div>
+
+          </div>
+          <!-- <div
+            style="color: #ff7355"
+            *ngIf="
+              registerForm.get(['passwords', 'password'])?.value !=
+                registerForm.get(['passwords', 'confirm_password'])?.value &&
+              registerForm.get(['passwords', 'confirm_password'])?.value != null
+            "
+          >
+            Password does not match
+          </div> -->
+          <input
+            class="w-100 btn btn-lg mt-3"
+            type="submit"
+            [disabled]="false"
+            value="Register"
+          />
+          <a
+            href="#"
+            routerLink="/login"
+            class="fw-bold mt-3 text-capitalize text-decoration-none text-decoration-underline text-muted sign-up-btn"
+            >Already have account? log in</a
+          >
+
+          <div
+            *ngIf="alert_message"
+            class="toast align-items-center text-white bg-success border-0 d-flex mt-3"
+            role="alert"
+            aria-live="assertive"
+            aria-atomic="true"
+          >
+            <div class="d-flex justify-content-center w-100">
+              <div class="toast-body text-center">Account Created! ⭐</div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="col-md-2"></div>
+      <div class="col-md-5">
+        <img src="./../../../../../assets/login/1.PNG" alt="" />
+      </div>
+    </div>
+  </div>
+</main>

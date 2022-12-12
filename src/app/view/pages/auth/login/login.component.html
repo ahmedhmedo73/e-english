@@ -1,0 +1,103 @@
+<main>
+  <div class="container p-5">
+    <div class="row">
+      <div class="col-md-5 position-relative">
+        <h2>
+          Welcome Again <br />
+          Log In Now For Free...
+        </h2>
+        <form
+          class="form-signin align-items-center d-flex flex-column justify-content-center"
+          [formGroup]="loginForm"
+          (ngSubmit)="login(loginForm)"
+        >
+          <div class="form-floating w-100">
+            <div class="col-md-12 my-2">
+              <label for="email" class="form-label">Email</label>
+              <input
+                type="email"
+                id="email"
+                class="form-control"
+                formControlName="email"
+              />
+            </div>
+          </div>
+
+          <div
+            *ngIf="loginForm.get('email')?.invalid && loginForm.touched"
+            class="w-100 ps-1 mt-2"
+          >
+            <p class="error-message">
+              {{
+                loginForm.get("email")?.hasError("required")
+                  ? "email is empty"
+                  : "email is invalid"
+              }}
+            </p>
+          </div>
+
+          <div class="form-floating w-100">
+            <div class="col-md-12 my-2">
+              <label for="password" class="form-label">password</label>
+              <input
+                formControlName="password"
+                type="password"
+                id="password"
+                class="form-control"
+              />
+            </div>
+          </div>
+
+          <!-- <div
+            *ngIf="loginForm.get('password')?.invalid && loginForm.touched"
+            class="w-100 ps-1 mt-2"
+          >
+            <p class="error-message">
+              {{
+                loginForm.get("password")?.hasError("required")
+                  ? "password is empty"
+                  : "password must be more than 6 digits"
+              }}
+            </p>
+          </div> -->
+
+          <div *ngIf="error" class="w-100 ps-1 mt-2">
+            <p class="error-message">
+              {{ error }}
+            </p>
+          </div>
+          <input
+            class="w-100 btn"
+            type="submit"
+            [disabled]="loginForm.invalid"
+            value="Login"
+          />
+          <a
+            href="#"
+            routerLink="/register"
+            class="fw-bold mt-3 text-capitalize text-decoration-none text-decoration-underline text-muted"
+            >Don't have account? register</a
+          >
+
+          <div
+            *ngIf="alert_message_status"
+            class="toast align-items-center text-white bg-warning border-0 d-flex mt-3"
+            role="alert"
+            aria-live="assertive"
+            aria-atomic="true"
+          >
+            <div class="d-flex justify-content-center w-100">
+              <div class="toast-body text-center text-capitalize">
+                {{ alert_message }}
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="col-md-2"></div>
+      <div class="col-md-5">
+        <img src="assets/login/1.PNG" alt="" />
+      </div>
+    </div>
+  </div>
+</main>

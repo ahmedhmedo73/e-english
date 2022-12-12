@@ -1,0 +1,29 @@
+<div
+  class="admin-pages-container  h-100 position-fixed px-4 pt-5 d-flex flex-column justify-content-between"
+>
+  <div>
+    <a
+      *ngFor="let pageLink of pageLinks"
+      class="page-link text-light d-flex align-items-center gap-3 my-2 py-2 px-2"
+      [ngClass]="{
+        'active-page-link':
+          path == pageLink.route ||
+          (isVideoPage && pageLink.route == '/admin/tutorials')
+      }"
+      [routerLink]="pageLink.route"
+    >
+      <img class="playlist-icon" [src]="pageLink.icon" alt="" />
+      <p>
+        {{ pageLink.name }}
+      </p>
+    </a>
+  </div>
+
+  <a
+    class="page-link d-flex text-light gap-2 align-items-center my-2 py-2 px-2"
+    (click)="signOut()"
+  >
+    <i class="fa-solid fa-right-from-bracket"></i>
+    <p>Sign Out</p>
+  </a>
+</div>

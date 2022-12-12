@@ -1,0 +1,61 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <button class="btn btn-info" (click)="redirectToUSersPage()">Back</button>
+    </div>
+    <div
+      class="col-md-12 d-flex justify-content-center mb-3 position-relative"
+      *ngIf="totalAnsweredWrong"
+    >
+      <p class="total-answered position-absolute text-center">
+        Total <br />
+        {{ totalAnswered }}
+      </p>
+      <canvas
+        baseChart
+        [data]="doughnutChartDatasets"
+        [options]="doughnutChartOptions"
+        [type]="'doughnut'"
+      >
+      </canvas>
+    </div>
+    <div class="col-md-12">
+      <nz-table
+        #basicTable
+        *ngIf="questionsAnswers.length"
+        [nzData]="questionsAnswers"
+        [nzBordered]="true"
+      >
+        <thead>
+          <tr>
+            <th *ngFor="let head of heads">{{ head }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let questionsAnswer of questionsAnswers; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ questionsAnswer.id }}</td>
+            <td>{{ questionsAnswer.question.question }}</td>
+            <td>{{ questionsAnswer.correctAnswer }}</td>
+            <td>{{ questionsAnswer.answers }}</td>
+            <td>
+              <div class="d-flex justify-content-center">
+                <i
+                  class="fa-solid fa-circle-check text-success"
+                  *ngIf="questionsAnswer.isCorrectAnswer == 1"
+                ></i>
+                <i
+                  class="fa-solid fa-circle-xmark text-danger"
+                  *ngIf="questionsAnswer.isCorrectAnswer == 0"
+                ></i>
+              </div>
+            </td>
+            <td>
+              {{ questionsAnswer.creationTime }}
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+</div>

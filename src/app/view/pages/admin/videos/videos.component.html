@@ -1,0 +1,285 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 p-0 py-1">
+      <a routerLink="/admin/tutorials" class="btn btn-info text-white">back</a>
+    </div>
+    <div class="col-md-12 d-flex justify-content-center border py-2 bg-white">
+      <p class="m-0 fs-5">Beginner</p>
+    </div>
+    <div
+      class="col-md-12 video-row d-flex align-items-center py-2 border bg-white"
+      *ngFor="let video of videos; let i = index"
+    >
+      <div class="col-md-4">
+        <p>{{ video.name }}</p>
+      </div>
+      <div class="col-md-2">
+        <p>Views</p>
+      </div>
+      <div class="col-md-2 d-flex justify-content-end p-0">
+        <button
+          class="btn btn-info fs-10px text-white"
+          (click)="openSentencesModal(video.id)"
+        >
+          Sentences
+        </button>
+      </div>
+      <div class="col-md-2 d-flex justify-content-end p-0">
+        <button
+          class="btn btn-info fs-10px text-white"
+          (click)="openQuistionsModal(video.id)"
+        >
+          Quistions
+        </button>
+      </div>
+      <div class="col-md-2 d-flex justify-content-end p-0">
+        <button
+          class="btn btn-danger fs-10px text-white"
+          (click)="deleteVideo(video.id)"
+        >
+          Delete Video
+        </button>
+      </div>
+    </div>
+    <div class="col-md-12 py-2 px-0">
+      <button class="btn btn-success" (click)="showAddVideoModal = true">
+        Add Video
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- show sentences -->
+<nz-modal
+  [nzVisible]="showSentencesModal"
+  nzTitle="Sentences"
+  [nzFooter]="null"
+  [nzStyle]="{ width: '40vw' }"
+  (nzOnCancel)="showSentencesModal = false"
+>
+  <ng-container *nzModalContent>
+    <div class="container bg-white my-2">
+      <div class="row">
+        <div class="col-md-12 d-flex justify-content-end">
+          <button
+            class="btn btn-success mb-2"
+            (click)="showAddSentenceModal = true"
+          >
+            Add Sentence
+          </button>
+        </div>
+      </div>
+      <p *ngIf="sentences.length == 0" class="text-center">
+        there is no sentennces 😥
+      </p>
+      <div
+        class="row quistion-card rounded-2 py-2 mb-2"
+        *ngFor="let sentence of sentences"
+      >
+        <div class="col-md-12 d-flex justify-content-between">
+          <p class="ms-2">{{ sentence.sentence }}</p>
+          <button class="btn btn-danger text-white fs-10px"
+            (click)="deleteSentence(sentence.id)"
+          >
+            Delete Sentence
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</nz-modal>
+
+<!-- show Quistions -->
+<nz-modal
+  [nzVisible]="showQuistionsModal"
+  nzTitle="Questions"
+  [nzFooter]="null"
+  [nzStyle]="{ width: '40vw' , top : '5vh' }"
+  (nzOnCancel)="showQuistionsModal = false"
+>
+  <ng-container *nzModalContent>
+    <div class="container bg-white my-2">
+      <div class="row">
+        <div class="col-md-12 d-flex justify-content-end">
+          <button
+            class="btn btn-success mb-2"
+            (click)="showAddQuistionModal = true"
+          >
+            Add Question
+          </button>
+        </div>
+      </div>
+      <p *ngIf="!questions" class="text-center">there is no quistions 😥</p>
+      <div class="questions-container">
+        <div
+          class="row quistion-card rounded-2 py-2 mb-2"
+          *ngFor="let question of questions"
+        >
+          <div class="col-md-12 mb-3">
+            <h3 class="ms-2">{{ question.question }}</h3>
+          </div>
+          <div
+            class="col-md-6 d-flex gap-1 mb-1"
+            [ngClass]="{ 'correct-answer': question.correctAnswer == 1 }"
+          >
+            <p class="mb-0">1)</p>
+            <p>{{ question.answer1 }}</p>
+          </div>
+          <div
+            class="col-md-6 d-flex gap-1"
+            [ngClass]="{ 'correct-answer': question.correctAnswer == 2 }"
+          >
+            <p class="mb-0">2)</p>
+            <p>{{ question.answer2 }}</p>
+          </div>
+          <div
+            class="col-md-6 d-flex gap-1 mb-1"
+            [ngClass]="{ 'correct-answer': question.correctAnswer == 3 }"
+          >
+            <p class="mb-0">3)</p>
+            <p>{{ question.answer3 }}</p>
+          </div>
+          <div
+            class="col-md-6 d-flex gap-1"
+            [ngClass]="{ 'correct-answer': question.correctAnswer == 4 }"
+          >
+            <p class="mb-0">4)</p>
+            <p>{{ question.answer4 }}</p>
+          </div>
+          <div class="col-md-12 d-flex align-items-center justify-content-end">
+            <button class="btn btn-danger text-white fs-10px"
+              (click)="deleteQuestion(question.id)">
+              Delete Quistion
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</nz-modal>
+
+<!-- add question -->
+<nz-modal
+  [nzVisible]="showAddQuistionModal"
+  nzTitle="Add Quistion"
+  [nzFooter]="null"
+  [nzStyle]="{ width: '40vw' }"
+  (nzOnCancel)="showAddQuistionModal = false"
+>
+  <ng-container *nzModalContent>
+    <div class="container bg-white my-2">
+      <form [formGroup]="quistionForm">
+        <div class="row quistion-card rounded-2 py-2">
+          <div class="col-md-12">
+            <label class="mb-0">Quistion</label>
+            <input
+              class="form-control"
+              type="text"
+              formControlName="Question"
+            />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label mb-0">Answer 1</label>
+            <input class="form-control" type="text" formControlName="Answer1" />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label mb-0">Answer 2</label>
+            <input class="form-control" type="text" formControlName="Answer2" />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label mb-0">Answer 3</label>
+            <input class="form-control" type="text" formControlName="Answer3" />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label mb-0">Answer 4</label>
+            <input class="form-control" type="text" formControlName="Answer4" />
+          </div>
+          <div class="col-md-12">
+            <label class="mb-0 mt-1">Correct Answer</label>
+            <input
+              class="form-control"
+              type="number"
+              formControlName="CorrectAnswer"
+            />
+          </div>
+          <div
+            class="col-md-12 d-flex align-items-center justify-content-center"
+          >
+            <button
+              class="btn btn-success text-white fs-10px mt-3 w-50"
+              [disabled]="quistionForm.invalid"
+              (click)="addQuistion()"
+            >
+              Add Quistion
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </ng-container>
+</nz-modal>
+
+<!-- add Video -->
+<nz-modal
+  [nzVisible]="showAddVideoModal"
+  nzTitle="Add New Video"
+  [nzFooter]="null"
+  [nzStyle]="{ width: '40vw' }"
+  (nzOnCancel)="showAddVideoModal = false"
+>
+  <ng-container *nzModalContent>
+    <div class="container bg-white my-2">
+      <form [formGroup]="videoForm">
+        <div class="row rounded-2">
+          <label class="form-label px-0">Video Name</label>
+          <input type="text" class="form-control" formControlName="name" />
+          <label class="form-label px-0">Upload Video</label>
+          <input
+            type="file"
+            class="form-control"
+            (change)="handleFile($event)"
+            formControlName="files"
+          />
+          <div class="col-md-12 d-flex justify-content-center">
+            <button
+              class="btn btn-success mt-3 add-video"
+              [disabled]="videoForm.invalid"
+              (click)="addVideo()"
+            >
+              ADD
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </ng-container>
+</nz-modal>
+
+<!-- add Sentence -->
+<nz-modal
+  [nzVisible]="showAddSentenceModal"
+  nzTitle="Add New Sentence"
+  [nzFooter]="null"
+  [nzStyle]="{ width: '40vw' }"
+  (nzOnCancel)="showAddSentenceModal = false"
+>
+  <ng-container *nzModalContent>
+    <div class="container bg-white my-2">
+      <form [formGroup]="sentenceForm">
+        <div class="row rounded-2">
+          <label class="form-label px-0">Sentence</label>
+          <input type="text" class="form-control" formControlName="Sentence" />
+          <div class="col-md-12 d-flex justify-content-center">
+            <button
+              class="btn btn-success mt-3 add-video"
+              [disabled]="sentenceForm.invalid"
+              (click)="addSentence()"
+            >
+              ADD
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </ng-container>
+</nz-modal>

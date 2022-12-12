@@ -1,0 +1,53 @@
+<div class="row border border-light profile-settings-container" style="margin-right: 0">
+  <div class="col-md-12 d-flex profile box-shadow-bottom">
+    <i class="fa-solid fa-circle-user"></i>
+    <div class="d-flex flex-column">
+      <p class="user-name">user-name</p>
+      <span class="user-name-score">score 321</span>
+    </div>
+  </div>
+  <div class="col-md-12 profile-settings">
+    <div class="row">
+      <div class="col-md-12 d-flex box-shadow-bottom">
+        <a routerLink="/profile/personal-information" class="d-flex">
+          <i class="fa-solid fa-user"></i>
+          <p
+            [ngClass]="{
+              active:
+                path == '/profile/personal-information' || path == '/profile'
+            }"
+          >
+            Profile
+          </p>
+        </a>
+      </div>
+      <div class="col-md-12 d-flex box-shadow-bottom">
+        <a
+          routerLink="/profile/playlists"
+          class="d-flex align-items-center gap-3 ps-2"
+        >
+          <img class="playlist-icon" src="assets/icons/playlist.png" alt="" />
+          <p [ngClass]="{ active: path == '/profile/playlists' }">PlayLists</p>
+        </a>
+      </div>
+      <div class="col-md-12 d-flex box-shadow-bottom">
+        <a routerLink="/profile/stats" class="d-flex">
+          <i class="fa-solid fa-chart-line"></i>
+          <p [ngClass]="{ active: path == '/profile/stats' }">Stats</p>
+        </a>
+      </div>
+      <div class="col-md-12 d-flex box-shadow-bottom">
+        <a routerLink="/profile/rank" class="d-flex">
+          <i class="fa-solid fa-chart-simple"></i>
+          <p [ngClass]="{ active: path == '/profile/rank' }">Score & Rank</p>
+        </a>
+      </div>
+      <div class="col-md-12 d-flex box-shadow-bottom">
+        <a style="cursor: pointer" class="d-flex" (click)="signOut()">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <p>Sign Out</p>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
