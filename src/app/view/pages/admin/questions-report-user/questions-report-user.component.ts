@@ -26,7 +26,6 @@ export class QuestionsReportUserComponent implements OnInit {
   moment: any = moment;
   heads: string[] = [
     '#',
-    'Id',
     'Question',
     'Correct Answer',
     "User's Answer",
@@ -39,51 +38,62 @@ export class QuestionsReportUserComponent implements OnInit {
   totalAnsweredWrong!: number;
 
   id: any;
+
+  isQuestionReport: boolean = true;
   constructor(
-    private formBuilder: FormBuilder,
     private questionAnswersService: QuestionAnswersService,
     private statsService: StatsService,
     private activatedRoute: ActivatedRoute,
-    private router : Router
+    private router: Router
   ) {}
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((data: any) => {
       this.id = data.id;
     });
-    this.getReport();
+    this.getQuestionAnswersReport();
   }
 
-  getReport(): void {
+  getQuestionAnswersReport(): void {
     this.questionAnswersService.GetQuestionAnswersForUser(this.id).subscribe({
-      next: (data: any) => {
-        this.questionsAnswers = data.$values;
-        this.questionsAnswers = this.questionsAnswers.filter((data: Object) => {
-          return 'id' in data;
-        });
+      next: (response: any) => {
+        this.setData(response.data);
       },
     });
+  }
 
-    forkJoin({
-      total: this.statsService.GetQuestionAnswersCount(this.id),
-      right: this.statsService.GetQuestionAnswersCountRight(this.id),
-      wrong: this.statsService.GetQuestionAnswersCountMistake(this.id),
-    }).subscribe((data: any) => {
-      this.totalAnswered = data['total'];
-      this.totalAnsweredRight = data['right'];
-      this.totalAnsweredWrong = data['wrong'];
-
-      this.doughnutChartDatasets = {
-        labels: ['Wrong', 'Correct'],
-        datasets: [
-          {
-            data: [this.totalAnsweredWrong, this.totalAnsweredRight],
-            backgroundColor: ['#ff6384', '#36a2eb'],
-          },
-        ],
-      };
-    });
+  getSentenceAnswersReport(): void {
+    
   }
   redirectToUSersPage(): void {
     this.router.navigate(['/admin/user-accounts']);
+  }
+
+  setData(data: any): void {
+    this.totalAnswered = data.totalCount;
+    this.totalAnsweredRight = data.rightCount;
+    this.totalAnsweredWrong = data.wrongCount;
+    this.questionsAnswers = data.questionsAnswers.$values;
+
+    this.drawDonughtChart();
+  }
+
+  drawDonughtChart(): void {
+    this.doughnutChartDatasets = {
+      labels: ['Wrong', 'Correct'],
+      datasets: [
+        {
+          data: [this.totalAnsweredWrong, this.totalAnsweredRight],
+          backgroundColor: ['#ff6384', '#36a2eb'],
+        },
+      ],
+    };
+  }
+
+  changeReport() {
+    if (this.isQuestionReport) {
+      this.getQuestionAnswersReport();
+    } else {
+      this.getSentenceAnswersReport();
+    }
   }
 }
