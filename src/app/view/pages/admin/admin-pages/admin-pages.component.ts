@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { PageLink } from '../../../../core/models/admin-pages';
 
 @Component({
@@ -28,7 +29,7 @@ export class AdminPagesComponent implements OnInit {
     },
   ];
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private authService: AuthService) {
     this.path = this.router.url;
     this.router.events.subscribe((val: any) => {
       if (val instanceof NavigationEnd) {
@@ -39,6 +40,6 @@ export class AdminPagesComponent implements OnInit {
   }
   ngOnInit(): void {}
   signOut() {
-    this.router.navigate(['/login']);
+    this.authService.logout();
   }
 }

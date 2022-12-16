@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { environment } from 'src/app/core/environments/environment';
@@ -40,15 +40,24 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getVideo(6);
+    this.getVideo(16);
+    this.quizService
+      .answerQuestion({
+        idQue: 24,
+        answerId: 2,
+      })
+      .subscribe({
+        next: (data) => {},
+        error: (error) => {},
+      });
   }
 
   getVideo(id: number): void {
     this.adminService.GetVideo(id).subscribe({
-      next: (data: any) => {
-        this.video = data;
-        this.questions = data.questions.$values;
-        this.sentences = data.spokenSentences.$values;
+      next: (response: any) => {
+        this.video = response.data;
+        this.questions = response.data.questions.$values;
+        this.sentences = response.data.spokenSentences.$values;
 
         const formData = new FormData();
         formData.append('IdVideo', this.video.id);
@@ -75,23 +84,15 @@ export class HomeComponent implements OnInit {
     this.speakingAnswer = 1;
     this.setScore();
   }
-  checkMcqAnswer(
-    question: any,
-    answer: string,
-    index: number,
-    answerNumber: number
-  ) {
+  checkMcqAnswer(question: any, index: number, answerNumber: number) {
     this.showQuestion = false;
     this.isCorrect[index] = question.correctAnswer == answerNumber;
     this.isAnswered[index] = answerNumber;
 
     this.quizService
       .answerQuestion({
-        IdQue: question.id,
-        IdUser: 2,
-        CorrectAns: 'sad',
-        UserAns: answer,
-        iscorrect: question.correctAnswer == answerNumber ? 1 : 0,
+        idQue: question.id,
+        answerId: 1,
       })
       .subscribe({
         next: (data) => {},

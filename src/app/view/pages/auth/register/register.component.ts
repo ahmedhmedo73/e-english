@@ -28,14 +28,14 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.registerForm = this.fb.group({
-      Fname: ['', [Validators.required]],
-      Lname: ['', [Validators.required]],
+      fname: ['', [Validators.required]],
+      lname: ['', [Validators.required]],
       username: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
-      repassword: ['', [Validators.required]],
+      repassword: [{ value: '', disabled: false }, [Validators.required]],
       gender: ['', [Validators.required]],
       age: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
     });
   }
   passwordConfirming(c: AbstractControl): ValidationErrors | null {
@@ -45,23 +45,14 @@ export class RegisterComponent implements OnInit {
     return null;
   }
   register() {
-    const formData = new FormData(); 
-    formData.append('Fname', this.registerForm.controls['Fname'].value);
-    formData.append('Lname', this.registerForm.controls['Lname'].value);
-    formData.append('username', this.registerForm.controls['username'].value);
-    formData.append('password', this.registerForm.controls['password'].value);
-    formData.append('repassword', this.registerForm.controls['repassword'].value);
-    formData.append('age', this.registerForm.controls['age'].value);
-    formData.append('gender', this.registerForm.controls['gender'].value);
-    formData.append('email', this.registerForm.controls['email'].value);
-
-    this._AuthService.register(formData).subscribe((response) => {
-      if (response.message == 'success') {
-        this._Router.navigate(['/login']);
-      } else {
-        this.error = response.errors.email.message;
-      }
-    });
+    if (this.registerForm.valid) {
+      this._AuthService
+        .register(this.registerForm.value)
+        .subscribe((response) => {
+          localStorage.setItem('token', response.token);
+          this._Router.navigate(['/home']);
+        });
+    }
   }
 
   confirmPassword(control: AbstractControl): ValidationErrors | null {

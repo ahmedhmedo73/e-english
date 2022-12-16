@@ -8,13 +8,15 @@ import {
 } from '@angular/router';
 import jwtDecode from 'jwt-decode';
 import { Observable } from 'rxjs';
-import { AuthService } from '../services/auth/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuard implements CanActivate {
-  constructor(private router: Router) {}
+export class CanAccessGuard implements CanActivate {
+  user: any;
+  constructor(private router: Router) {
+    this.user = jwtDecode(localStorage['token']);
+  }
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -23,10 +25,12 @@ export class AuthGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    if (localStorage['token']) {
+    console.log(this.user, 'user');
+
+    if (localStorage['token'] && this.user.roles == 'Admin') {
       return true;
     } else {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/home']);
       return false;
     }
   }

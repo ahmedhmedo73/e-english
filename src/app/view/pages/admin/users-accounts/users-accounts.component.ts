@@ -11,7 +11,7 @@ export class UsersAccountsComponent implements OnInit {
   users: any;
   heads: string[] = [
     '#',
-    'id',
+    'Username',
     'First Name',
     'Last Name',
     'Email',
@@ -30,7 +30,7 @@ export class UsersAccountsComponent implements OnInit {
   get(): void {
     this.usersAccountsService.GetUsers().subscribe({
       next: (data: any) => {
-        this.users = data['$values'];
+        this.users = data.data['$values'];
       },
     });
   }

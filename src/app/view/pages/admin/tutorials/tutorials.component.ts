@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/core/services/auth/auth.service';
+import { CategoriesService } from 'src/app/core/services/categories/categories.service';
 import { AdminService } from '../../../../core/services/admin/admin.service';
 
 @Component({
@@ -8,61 +10,81 @@ import { AdminService } from '../../../../core/services/admin/admin.service';
   styleUrls: ['./tutorials.component.scss'],
 })
 export class TutorialsComponent implements OnInit {
-  form: FormGroup;
+  form!: FormGroup;
   showAddNewListModal: boolean = false;
   selectedCategorie!: number;
-  categories: any = [
-    { id: 1, name: 'Step' },
-    { id: 2, name: 'Structure' },
-    { id: 3, name: 'Kids' },
-  ];
 
-  sections : any = [
-    {id : 1 , name : 'Beginner'},
-    {id : 2 , name : 'Intermediate'},
-    {id : 3 , name : 'Advanced'},
-    {id : 4 , name : 'Expert'},
-  ]
+  categories: any;
+  isEdit!: boolean;
+  id: any;
 
   constructor(
     private formBuilder: FormBuilder,
-    private adminService: AdminService
-  ) {
+    private adminService: AdminService,
+    private categoriesService: CategoriesService,
+    private authService: AuthService
+  ) {}
+
+  ngOnInit(): void {
+    this.get();
+    this.createForm();
+  }
+
+  createForm() {
     this.form = this.formBuilder.group({
-      Question: 'ddd',
-      Answer1: 'ddd',
-      Answer4: 'ddd',
-      Answer2: 'dddd',
-      Answer3: 'ddd',
-      CorrectAnswer: 1,
-      Vid: 2,
+      name: ['', Validators.required],
     });
   }
 
-  ngOnInit(): void {}
-
-  submit() {
-    console.log(this.form);
-    const formData = new FormData();
-    formData.append('Question', this.form.controls['Question'].value);
-    formData.append('Answer1', this.form.controls['Answer1'].value);
-    formData.append('Answer2', this.form.controls['Answer2'].value);
-    formData.append('Answer3', this.form.controls['Answer3'].value);
-    formData.append('Answer4', this.form.controls['Answer4'].value);
-    formData.append('CorrectAnswer', this.form.controls['CorrectAnswer'].value);
-    formData.append('Vid', this.form.controls['Vid'].value);
-    // this.adminService.submit(formData).subscribe({
-    //   next: (data) => {
-    //     console.log(data);
-    //   },
-    // });
+  get() {
+    this.categoriesService.GetCategories().subscribe({
+      next: (data: any) => {
+        this.categories = data.data.$values;
+      },
+    });
   }
 
-  ShowAddNewListModal() {
+  ShowAddNewListModal(category?: any) {
     this.showAddNewListModal = true;
+    if (category) {
+      this.id = category.id;
+      this.form.reset(category);
+      this.isEdit = true;
+    }
   }
 
-  addList() {
-    this.showAddNewListModal = false;
+  addCategory() {
+    if (this.form.valid) {
+      this.categoriesService.CreateCategory(this.form.value).subscribe({
+        next: (data) => {
+          this.get();
+          this.showAddNewListModal = false;
+          this.form.reset();
+        },
+      });
+    }
+  }
+
+  deleteCategory(id: number) {
+    this.categoriesService.DeleteCategories(id).subscribe({
+      next: (data) => {
+        this.get();
+      },
+    });
+  }
+
+  updateCategory() {
+    if (this.form.valid) {
+      this.categoriesService
+        .UpdateCategory({ id: this.id, ...this.form.value })
+        .subscribe({
+          next: (data) => {
+            this.showAddNewListModal = false;
+            this.form.reset();
+            this.isEdit = false;
+            this.get();
+          },
+        });
+    }
   }
 }

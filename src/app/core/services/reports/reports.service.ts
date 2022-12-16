@@ -6,19 +6,13 @@ import { environment } from 'src/app/core/environments/environment';
 @Injectable({
   providedIn: 'root',
 })
-export class QuestionAnswersService {
+export class ReportsService {
   constructor(private HttpClient: HttpClient) {}
 
-  GetQuestions() {
+  GetQuestionAnswersReportForUser(userId: string) {
     return this.HttpClient.get(
-      environment.endpoint + 'Question/GetAllQuestions'
-    );
-  }
-
-  GetQuestionAnswersForUser(IdUser: string) {
-    return this.HttpClient.get(
-      environment.endpoint + 'MyAnswer/Get_Question_Answers',
-      { params: { IdUser } }
+      environment.endpoint + 'MyAnswer/GetUserAnswersOnQuestions',
+      { params: { userId } }
     );
   }
 }

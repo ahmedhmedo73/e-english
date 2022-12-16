@@ -20,21 +20,15 @@ export class AdminService {
     );
   }
 
-  GetVideos(section: string) {
-    return this._HttpClient.get(
-      environment.endpoint + 'Section/GitVideo?name=' + section
-    );
+  GetVideos(categoryId: string) {
+    return this._HttpClient.get(environment.endpoint + 'Section/GitVideo', {
+      params: { categoryId },
+    });
   }
 
   GetVideo(id: any) {
     return this._HttpClient.get(
       environment.endpoint + 'VidUser/GetVideo?id=' + id
-    );
-  }
-  AddQuistion(formData: any) {
-    return this._HttpClient.post(
-      environment.endpoint + 'Question/SetQuestion',
-      formData
     );
   }
 
@@ -54,11 +48,6 @@ export class AdminService {
   getVideoSentences(id: number) {
     return this._HttpClient.get(
       environment.endpoint + 'Sentence/GetSentence?id=' + id
-    );
-  }
-  DeleteQuestion(id: any) {
-    return this._HttpClient.delete(
-      environment.endpoint + 'Question/deleteQuestion?id=' + id
     );
   }
 

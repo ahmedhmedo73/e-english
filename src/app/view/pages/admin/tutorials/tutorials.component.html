@@ -2,81 +2,64 @@
   <div class="row">
     <div class="col-md-12 p-0">
       <div class="list-header p-2text-center">
-        <h3>Sections</h3>
+        <h3>Categories</h3>
       </div>
       <div
         class="list-content d-flex justify-content-between p-2 border border-1"
-        *ngFor="let section of sections"
+        *ngFor="let category of categories"
       >
-        <h5>{{ section.name }}</h5>
+        <h5>{{ category.name }}</h5>
         <div class="list-btn d-flex gap-1">
           <a
             class="btn btn-info fs-10px text-white"
-            [routerLink]="['/admin/video/' + section.name]"
+            [routerLink]="['/admin/video/' + category.id]"
             routerLinkActive="router-link-active"
             >Videos</a
           >
-          <button class="btn btn-info fs-10px text-white">Delete List</button>
+          <button
+            class="btn btn-success fs-10px text-white"
+            (click)="ShowAddNewListModal(category)"
+          >
+            Update
+          </button>
+          <button
+            class="btn btn-danger fs-10px text-white"
+            (click)="deleteCategory(category.id)"
+          >
+            Delete
+          </button>
         </div>
       </div>
     </div>
 
-    <!-- <div class="col-md-12 mt-4">
+    <div class="col-md-12 mt-4">
       <button class="btn btn-success" (click)="ShowAddNewListModal()">
-        Add New Section
+        Add New Category
       </button>
-    </div> -->
+    </div>
   </div>
-  <!-- <form [formGroup]="form">
-    <label class="form-label">Question</label>
-    <input type="text" class="form-control" formControlName="Question"/>
-    <label class="form-label">Answer1</label>
-    <input type="text" class="form-control" formControlName="Answer1"/>
-    <label class="form-label">Answer2</label>
-    <input type="text" class="form-control" formControlName="Answer2"/>
-    <label class="form-label">Answer3</label>
-    <input type="text" class="form-control" formControlName="Answer3"/>
-    <label class="form-label">Answer4</label>
-    <input type="text" class="form-control" formControlName="Answer4"/>
-    <label class="form-label">CorrectAnswer</label>
-    <input type="text" class="form-control" formControlName="CorrectAnswer"/>
-    <label class="form-label">Vid</label>
-    <input type="text" class="form-control" formControlName="Vid"/>
-    <button class="btn btn-success mt-3" (click)="submit()">submit</button>
-  </form> -->
 </div>
 
-<!-- <nz-modal
+<nz-modal
   [nzVisible]="showAddNewListModal"
-  nzTitle="Add New List"
+  nzTitle="Add New Category"
   [nzFooter]="null"
   [nzStyle]="{ width: '40vw' }"
   (nzOnCancel)="showAddNewListModal = false"
 >
   <ng-container *nzModalContent>
-    <form [formGroup]="newListForm" class="d-flex flex-column gap-2">
-      <div class="d-flex gap-2 flex-column categorie-list">
-        <label class="form-label">Categorie</label>
-        <p-dropdown
-          [options]="categories"
-          formControlName="categorie_id"
-          optionLabel="name"
-          placeholder="select categorie"
-          optionValue="id"
-          style="width: 100%"
-        ></p-dropdown>
-      </div>
+    <form [formGroup]="form" class="d-flex flex-column gap-2">
       <div class="d-flex gap-2 flex-column">
-        <label class="form-label">List Name</label>
-        <input type="text" class="form-control" formControlName="list_name" />
+        <label class="form-label">Category Name</label>
+        <input type="text" class="form-control" formControlName="name" />
       </div>
       <button
         class="btn btn-info text-white"
-        [disabled]="newListForm.invalid"
-        (click)="addList()"
+        [disabled]="form.invalid"
+        (click)="isEdit ? updateCategory() : addCategory()"
       >
-        Add
+        {{ isEdit ? "Edit" : "Add" }}
       </button>
     </form>
   </ng-container>
-</nz-modal> -->
+</nz-modal>

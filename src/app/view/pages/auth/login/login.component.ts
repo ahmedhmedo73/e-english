@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private _AuthService: AuthService
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -50,22 +50,20 @@ export class LoginComponent implements OnInit {
       this.loginForm.reset();
     }
   }
-  login(loginform: FormGroup) {
-    let formData = new FormData();
-    formData.append(
-      'username',
-      loginform.controls['email'].value.toString() || ''
-    );
-    formData.append(
-      'pass',
-      loginform.controls['password'].value.toString() || ''
-    );
-    this._AuthService.login(formData).subscribe((response) => {
-      localStorage.setItem('user', response);
-      localStorage.setItem('user_id', response.id);
-      this._AuthService.saveCurrentUser();
-      this._AuthService.isLogin = true;
-      this.router.navigate(['/home']);
-    });
+  login() {
+    if (this.loginForm.valid)
+      this.authService.login(this.loginForm.value).subscribe((response) => {
+        localStorage.setItem('token', response.token);
+        this.authService.saveCurrentUser();
+
+        switch (response.roles.$values[0]) {
+          case 'Admin':
+            this.router.navigate(['/admin/tutorials']);
+            break;
+          case 'User':
+            this.router.navigate(['/home']);
+            break;
+        }
+      });
   }
 }

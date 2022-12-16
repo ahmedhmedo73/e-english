@@ -14,7 +14,7 @@
         <p>{{ video.name }}</p>
       </div>
       <div class="col-md-2">
-        <p>Views</p>
+        <p>{{ video.viewsCount }}</p>
       </div>
       <div class="col-md-2 d-flex justify-content-end p-0">
         <button
@@ -29,7 +29,7 @@
           class="btn btn-info fs-10px text-white"
           (click)="openQuistionsModal(video.id)"
         >
-          Quistions
+          Questions
         </button>
       </div>
       <div class="col-md-2 d-flex justify-content-end p-0">
@@ -78,7 +78,8 @@
       >
         <div class="col-md-12 d-flex justify-content-between">
           <p class="ms-2">{{ sentence.sentence }}</p>
-          <button class="btn btn-danger text-white fs-10px"
+          <button
+            class="btn btn-danger text-white fs-10px"
             (click)="deleteSentence(sentence.id)"
           >
             Delete Sentence
@@ -89,12 +90,12 @@
   </ng-container>
 </nz-modal>
 
-<!-- show Quistions -->
+<!-- show Questions -->
 <nz-modal
   [nzVisible]="showQuistionsModal"
   nzTitle="Questions"
   [nzFooter]="null"
-  [nzStyle]="{ width: '40vw' , top : '5vh' }"
+  [nzStyle]="{ width: '40vw', top: '5vh' }"
   (nzOnCancel)="showQuistionsModal = false"
 >
   <ng-container *nzModalContent>
@@ -103,7 +104,8 @@
         <div class="col-md-12 d-flex justify-content-end">
           <button
             class="btn btn-success mb-2"
-            (click)="showAddQuistionModal = true"
+            (click)="ShowAddQuistionModal()"
+            *ngIf="questions.length < 4"
           >
             Add Question
           </button>
@@ -118,38 +120,22 @@
           <div class="col-md-12 mb-3">
             <h3 class="ms-2">{{ question.question }}</h3>
           </div>
+
           <div
             class="col-md-6 d-flex gap-1 mb-1"
-            [ngClass]="{ 'correct-answer': question.correctAnswer == 1 }"
+            *ngFor="let answer of question.answers.$values"
+            [ngClass]="{ 'correct-answer': answer.isCorrectAnswer }"
           >
             <p class="mb-0">1)</p>
-            <p>{{ question.answer1 }}</p>
+            <p>{{ answer.answerText }}</p>
           </div>
-          <div
-            class="col-md-6 d-flex gap-1"
-            [ngClass]="{ 'correct-answer': question.correctAnswer == 2 }"
-          >
-            <p class="mb-0">2)</p>
-            <p>{{ question.answer2 }}</p>
-          </div>
-          <div
-            class="col-md-6 d-flex gap-1 mb-1"
-            [ngClass]="{ 'correct-answer': question.correctAnswer == 3 }"
-          >
-            <p class="mb-0">3)</p>
-            <p>{{ question.answer3 }}</p>
-          </div>
-          <div
-            class="col-md-6 d-flex gap-1"
-            [ngClass]="{ 'correct-answer': question.correctAnswer == 4 }"
-          >
-            <p class="mb-0">4)</p>
-            <p>{{ question.answer4 }}</p>
-          </div>
+
           <div class="col-md-12 d-flex align-items-center justify-content-end">
-            <button class="btn btn-danger text-white fs-10px"
-              (click)="deleteQuestion(question.id)">
-              Delete Quistion
+            <button
+              class="btn btn-danger text-white fs-10px"
+              (click)="deleteQuestion(question.id)"
+            >
+              Delete Question
             </button>
           </div>
         </div>
@@ -171,14 +157,34 @@
       <form [formGroup]="quistionForm">
         <div class="row quistion-card rounded-2 py-2">
           <div class="col-md-12">
-            <label class="mb-0">Quistion</label>
+            <label class="mb-0">Question</label>
             <input
               class="form-control"
               type="text"
-              formControlName="Question"
+              formControlName="question"
             />
           </div>
-          <div class="col-md-6">
+          <div></div>
+          <div
+            formArrayName="answerData"
+            *ngFor="let skill of answers().controls; let i = index"
+          >
+            <div [formGroupName]="i" class="row">
+              <label class="form-label mb-0">Answer {{ i + 1 }}</label>
+              <div class="col-md-12 d-flex gap-3">
+                <input
+                  class="form-control w-75"
+                  type="text"
+                  formControlName="answer"
+                />
+                <nz-select formControlName="isCorrectAnswer" class="w-25">
+                  <nz-option [nzValue]="true" nzLabel="correct"></nz-option>
+                  <nz-option [nzValue]="false" nzLabel="wrong"></nz-option>
+                </nz-select>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="col-md-6">
             <label class="form-label mb-0">Answer 1</label>
             <input class="form-control" type="text" formControlName="Answer1" />
           </div>
@@ -193,15 +199,15 @@
           <div class="col-md-6">
             <label class="form-label mb-0">Answer 4</label>
             <input class="form-control" type="text" formControlName="Answer4" />
-          </div>
-          <div class="col-md-12">
+          </div> -->
+          <!-- <div class="col-md-12">
             <label class="mb-0 mt-1">Correct Answer</label>
             <input
               class="form-control"
               type="number"
               formControlName="CorrectAnswer"
             />
-          </div>
+          </div> -->
           <div
             class="col-md-12 d-flex align-items-center justify-content-center"
           >
@@ -210,7 +216,7 @@
               [disabled]="quistionForm.invalid"
               (click)="addQuistion()"
             >
-              Add Quistion
+              Add Question
             </button>
           </div>
         </div>

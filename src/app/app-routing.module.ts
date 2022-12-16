@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './core/guards/auth.guard';
+import { CanAccessGuard } from './core/guards/can-access.guard';
 import { AboutUsComponent } from './view/pages/about-us/about-us.component';
 import { LoginComponent } from './view/pages/auth/login/login.component';
 import { NotfoundComponent } from './view/pages/auth/notfound/notfound.component';
@@ -30,6 +31,7 @@ const routes: Routes = [
     path: '',
     loadChildren: () =>
       import('./view/pages/admin/admin.module').then((m) => m.AdminModule),
+    canActivate: [CanAccessGuard],
   },
   { path: '**', component: NotfoundComponent },
 ];

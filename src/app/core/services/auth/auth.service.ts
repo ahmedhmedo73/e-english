@@ -13,7 +13,10 @@ export class AuthService {
   isLogin: boolean | undefined;
 
   constructor(private _HttpClient: HttpClient, private _Router: Router) {
-    if (localStorage.getItem('token') && localStorage.getItem('token') != null) {
+    if (
+      localStorage.getItem('token') &&
+      localStorage.getItem('token') != null
+    ) {
       this.saveCurrentUser();
     }
   }
@@ -23,19 +26,20 @@ export class AuthService {
   }
   register(formData: any): Observable<any> {
     return this._HttpClient.post(
-      'https://localhost:7189/User/CreateUser',
+      environment.endpoint + 'Auth/Register',
       formData
     );
   }
-  login(formData: any): Observable<any> {
-    return this._HttpClient.post(
-      environment.endpoint +'Login/login',
-      formData
-    );
+  login(data: any): Observable<any> {
+    return this._HttpClient.post(environment.endpoint + 'Auth/login', data);
   }
   logout() {
     this.currentUser.next(null);
     localStorage.removeItem('token');
     this._Router.navigate(['/']);
+  }
+
+  getToken() {
+    return localStorage['token'];
   }
 }
