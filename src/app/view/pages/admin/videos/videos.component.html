@@ -3,10 +3,50 @@
     <div class="col-md-12 p-0 py-1">
       <a routerLink="/admin/tutorials" class="btn btn-info text-white">back</a>
     </div>
-    <div class="col-md-12 d-flex justify-content-center border py-2 bg-white">
-      <p class="m-0 fs-5">Beginner</p>
-    </div>
-    <div
+    <p-table [value]="videos">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Name</th>
+          <th>viewsCount</th>
+          <th>Questions</th>
+          <th>Sentences</th>
+          <th>Actions</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-video let-rowIndex>
+        <tr>
+          <td>{{ video.name }}</td>
+          <td>
+            {{ video.viewsCount }}
+          </td>
+          <td>
+            <button
+              class="btn btn-info fs-10px text-white"
+              (click)="openQuistionsModal(video.id)"
+            >
+              <i class="fa-solid fa-eye"></i>
+            </button>
+          </td>
+          <td>
+            <button
+              class="btn btn-info fs-10px text-white"
+              (click)="openSentencesModal(video.id)"
+            >
+              <i class="fa-solid fa-eye"></i>
+            </button>
+          </td>
+          <td>
+            <button
+              class="btn btn-danger fs-10px text-white"
+              (click)="deleteVideo(video.id)"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+    <!-- <div
       class="col-md-12 video-row d-flex align-items-center py-2 border bg-white"
       *ngFor="let video of videos; let i = index"
     >
@@ -14,33 +54,12 @@
         <p>{{ video.name }}</p>
       </div>
       <div class="col-md-2">
-        <p>{{ video.viewsCount }}</p>
+        <p></p>
       </div>
-      <div class="col-md-2 d-flex justify-content-end p-0">
-        <button
-          class="btn btn-info fs-10px text-white"
-          (click)="openSentencesModal(video.id)"
-        >
-          Sentences
-        </button>
-      </div>
-      <div class="col-md-2 d-flex justify-content-end p-0">
-        <button
-          class="btn btn-info fs-10px text-white"
-          (click)="openQuistionsModal(video.id)"
-        >
-          Questions
-        </button>
-      </div>
-      <div class="col-md-2 d-flex justify-content-end p-0">
-        <button
-          class="btn btn-danger fs-10px text-white"
-          (click)="deleteVideo(video.id)"
-        >
-          Delete Video
-        </button>
-      </div>
-    </div>
+      <div class="col-md-2 d-flex justify-content-end p-0"></div>
+      <div class="col-md-2 d-flex justify-content-end p-0"></div>
+      <div class="col-md-2 d-flex justify-content-end p-0"></div>
+    </div> -->
     <div class="col-md-12 py-2 px-0">
       <button class="btn btn-success" (click)="showAddVideoModal = true">
         Add Video
@@ -187,10 +206,11 @@
                   type="text"
                   formControlName="answer"
                 />
-                <nz-select formControlName="isCorrectAnswer" class="w-25">
-                  <nz-option [nzValue]="true" nzLabel="correct"></nz-option>
-                  <nz-option [nzValue]="false" nzLabel="wrong"></nz-option>
-                </nz-select>
+                <input
+                  type="radio"
+                  name="isCorrect"
+                  formControlName="isCorrectAnswer"
+                />
               </div>
             </div>
           </div>

@@ -20,6 +20,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { TokenInterceptor } from './core/interceptors/auth.interceptor';
+import { SharedModule } from './core/shared/shared.module';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -44,6 +46,7 @@ import { TokenInterceptor } from './core/interceptors/auth.interceptor';
     HttpClientModule,
     BrowserAnimationsModule,
     OverlayModule,
+    SharedModule,
   ],
   providers: [
     NzNotificationService,
@@ -52,6 +55,7 @@ import { TokenInterceptor } from './core/interceptors/auth.interceptor';
       useClass: TokenInterceptor,
       multi: true,
     },
+    MessageService,
   ],
   bootstrap: [AppComponent],
 })
