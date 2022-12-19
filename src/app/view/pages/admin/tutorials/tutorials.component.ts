@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { CategoriesService } from 'src/app/core/services/categories/categories.service';
 import { AdminService } from '../../../../core/services/admin/admin.service';
@@ -22,7 +23,8 @@ export class TutorialsComponent implements OnInit {
     private formBuilder: FormBuilder,
     private adminService: AdminService,
     private categoriesService: CategoriesService,
-    private authService: AuthService
+    private authService: AuthService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -45,11 +47,19 @@ export class TutorialsComponent implements OnInit {
   }
 
   ShowAddNewListModal(category?: any) {
-    this.showAddNewListModal = true;
-    if (category) {
-      this.id = category.id;
-      this.form.reset(category);
-      this.isEdit = true;
+    if (this.categories.length < 3) {
+      this.showAddNewListModal = true;
+      if (category) {
+        this.id = category.id;
+        this.form.reset(category);
+        this.isEdit = true;
+      }
+    } else {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Add Category',
+        detail: "You Can't Add More Than Three Categories",
+      });
     }
   }
 
