@@ -37,23 +37,4 @@ export class AdminService {
       environment.endpoint + 'VidAdmin/Deletevid?id=' + id
     );
   }
-
-  AddSentence(formData: any) {
-    return this._HttpClient.post(
-      environment.endpoint + 'Sentence/SetSentence',
-      formData
-    );
-  }
-
-  getVideoSentences(id: number) {
-    return this._HttpClient.get(
-      environment.endpoint + 'Sentence/GetSentence?id=' + id
-    );
-  }
-
-  DeleteSentence(id: any) {
-    return this._HttpClient.delete(
-      environment.endpoint + 'Sentence/DeleteSentence?id=' + id
-    );
-  }
 }

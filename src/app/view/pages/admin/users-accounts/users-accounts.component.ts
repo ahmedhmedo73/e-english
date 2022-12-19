@@ -42,7 +42,7 @@ export class UsersAccountsComponent implements OnInit {
       },
     });
   }
-  viewQuestionsReport(id: any): void {
-    this.router.navigate(['/admin/questions-report-user/' + id]);
+  viewReport(id: any): void {
+    this.router.navigate(['/admin/user-report/' + id]);
   }
 }

@@ -1,0 +1,13 @@
+<div class="d-flex justify-content-center position-relative">
+  <p class="total-answered position-absolute text-center">
+    Total <br />
+    {{ total }}
+  </p>
+  <canvas
+    baseChart
+    [data]="doughnutChartDatasets"
+    [options]="doughnutChartOptions"
+    [type]="'doughnut'"
+  >
+  </canvas>
+</div>

@@ -14,6 +14,13 @@ export class QuizService {
     );
   }
 
+  answerSentence(data: any) {
+    return this.httpClient.post(
+      environment.endpoint + 'sentence_Answers_log/SentenceAnswersPost',
+      data
+    );
+  }
+
   addView(formData: any) {
     return this.httpClient.post(
       environment.endpoint + 'Views/AddView',

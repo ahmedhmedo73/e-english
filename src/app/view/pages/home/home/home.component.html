@@ -38,56 +38,23 @@
         <h2>Questions</h2>
         <div
           class="content my-3 p-3 rounded-2"
-          *ngFor="let question of questions; let i = index"
+          *ngFor="let question of questions; let index = index"
         >
           <h3>{{ question.question }}</h3>
           <div class="choises row w-100">
-            <div class="choise col-md-6 mb-3">
+            <div
+              class="choise col-md-6 mb-3"
+              *ngFor="let answer of question.answers.$values; let i = index"
+            >
               <a
-                (click)="checkMcqAnswer(question, question.answer1, i)"
+                (click)="checkMcqAnswer(question.id, answer.id, index, i + 1)"
                 [ngClass]="{
-                  correctAnswer: isCorrect[i] == true && isAnswered[i] == 1,
-                  wrongAnswer: isCorrect[i] == false && isAnswered[i] == 1,
-                  disabledAnswer: isAnswered[i]
+                  correctAnswer: isCorrect[index] && isAnswered[index] == i + 1,
+                  wrongAnswer: !isCorrect[index] && isAnswered[index] == i + 1,
+                  disabledAnswer: isAnswered[index]
                 }"
               >
-                A) <span>{{ question.answer1 }}</span>
-              </a>
-            </div>
-            <div class="choise col-md-6">
-              <a
-                (click)="checkMcqAnswer(question, question.answer2, i)"
-                [ngClass]="{
-                  correctAnswer: isCorrect[i] == true && isAnswered[i] == 2,
-                  wrongAnswer: isCorrect[i] == false && isAnswered[i] == 2,
-                  disabledAnswer: isAnswered[i]
-                }"
-              >
-                B) <span>{{ question.answer2 }}</span>
-              </a>
-            </div>
-            <div class="choise col-md-6">
-              <a
-                (click)="checkMcqAnswer(question, question.answer3, i)"
-                [ngClass]="{
-                  correctAnswer: isCorrect[i] == true && isAnswered[i] == 3,
-                  wrongAnswer: isCorrect[i] == false && isAnswered[i] == 3,
-                  disabledAnswer: isAnswered[i]
-                }"
-              >
-                C) <span>{{ question.answer3 }}</span>
-              </a>
-            </div>
-            <div class="choise col-md-6">
-              <a
-                (click)="checkMcqAnswer(question, question.answer4, i)"
-                [ngClass]="{
-                  correctAnswer: isCorrect[i] == true && isAnswered[i] == 4,
-                  wrongAnswer: isCorrect[i] == false && isAnswered[i] == 4,
-                  disabledAnswer: isAnswered[i]
-                }"
-              >
-                D) <span>{{ question.answer4 }}</span>
+                <span>{{ answer.answerText }}</span>
               </a>
             </div>
           </div>
@@ -107,19 +74,19 @@
       >
         <div class="d-flex flex-column">
           <p>Sentence : {{ sentence.sentence }}</p>
-          <p>Answer : {{ sentencesAnswer[i] }}</p>
+          <p>Answer : {{ sentenceAnswer }}</p>
         </div>
         <i class="fa-solid fa-spinner" *ngIf="loading"></i>
-        <div *ngIf="!loading && currentSentence != i">
+        <div *ngIf="!loading">
           <i
             class="fa-solid fa-microphone"
-            (click)="startService(i)"
-            *ngIf="currentSentence != i"
+            (click)="startService()"
+            *ngIf="!setenceAnswred"
           ></i>
           <i
             class="fa-solid fa-circle-stop"
-            (click)="stop(i)"
-            *ngIf="currentSentence == i"
+            (click)="stop()"
+            *ngIf="setenceAnswred"
           ></i>
         </div>
       </div>

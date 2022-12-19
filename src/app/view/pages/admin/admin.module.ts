@@ -8,9 +8,12 @@ import { IndexComponent } from './index/index.component';
 import { AdminPagesComponent } from './admin-pages/admin-pages.component';
 import { UsersAccountsComponent } from './users-accounts/users-accounts.component';
 import { VideosComponent } from './videos/videos.component';
-import { QuestionsReportComponent } from './questions-report/questions-report.component';
 import { NgChartsModule } from 'ng2-charts';
-import { QuestionsReportUserComponent } from './questions-report-user/questions-report-user.component';
+import { DoughnutChartComponent } from './components/doughnut-chart/doughnut-chart.component';
+import { AnswersReportsComponent } from './answers-reports/answers-reports.component';
+import { GeneralReportComponent } from './general-report/general-report.component';
+import { QuestionsAnswersComponent } from './components/questions-answers/questions-answers.component';
+import { SentencesAnswersComponent } from './components/sentences-answers/sentences-answers.component';
 
 @NgModule({
   declarations: [
@@ -19,8 +22,11 @@ import { QuestionsReportUserComponent } from './questions-report-user/questions-
     AdminPagesComponent,
     UsersAccountsComponent,
     VideosComponent,
-    QuestionsReportComponent,
-    QuestionsReportUserComponent,
+    AnswersReportsComponent,
+    GeneralReportComponent,
+    DoughnutChartComponent,
+    QuestionsAnswersComponent,
+    SentencesAnswersComponent,
   ],
   imports: [
     CommonModule,

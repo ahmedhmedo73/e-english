@@ -59,19 +59,29 @@
 >
   <ng-container *nzModalContent>
     <div class="container bg-white my-2">
-      <div class="row">
-        <div class="col-md-12 d-flex justify-content-end">
-          <button
-            class="btn btn-success mb-2"
-            (click)="showAddSentenceModal = true"
-          >
-            Add Sentence
-          </button>
+      <div class="row" *ngIf="!sentences.length">
+        <div class="col-md-12">
+          <form [formGroup]="sentenceForm">
+            <div class="row rounded-2">
+              <label class="form-label px-0">Sentence</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="Sentence"
+              />
+              <div class="col-md-12 d-flex justify-content-center">
+                <button
+                  class="btn btn-success mt-3 add-video"
+                  [disabled]="sentenceForm.invalid"
+                  (click)="addSentence()"
+                >
+                  ADD
+                </button>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
-      <p *ngIf="sentences.length == 0" class="text-center">
-        there is no sentennces 😥
-      </p>
       <div
         class="row quistion-card rounded-2 py-2 mb-2"
         *ngFor="let sentence of sentences"
@@ -251,35 +261,6 @@
               class="btn btn-success mt-3 add-video"
               [disabled]="videoForm.invalid"
               (click)="addVideo()"
-            >
-              ADD
-            </button>
-          </div>
-        </div>
-      </form>
-    </div>
-  </ng-container>
-</nz-modal>
-
-<!-- add Sentence -->
-<nz-modal
-  [nzVisible]="showAddSentenceModal"
-  nzTitle="Add New Sentence"
-  [nzFooter]="null"
-  [nzStyle]="{ width: '40vw' }"
-  (nzOnCancel)="showAddSentenceModal = false"
->
-  <ng-container *nzModalContent>
-    <div class="container bg-white my-2">
-      <form [formGroup]="sentenceForm">
-        <div class="row rounded-2">
-          <label class="form-label px-0">Sentence</label>
-          <input type="text" class="form-control" formControlName="Sentence" />
-          <div class="col-md-12 d-flex justify-content-center">
-            <button
-              class="btn btn-success mt-3 add-video"
-              [disabled]="sentenceForm.invalid"
-              (click)="addSentence()"
             >
               ADD
             </button>

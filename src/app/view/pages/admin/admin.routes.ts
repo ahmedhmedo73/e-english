@@ -3,8 +3,8 @@ import { Routes } from '@angular/router';
 import { IndexComponent } from './index/index.component';
 import { UsersAccountsComponent } from './users-accounts/users-accounts.component';
 import { VideosComponent } from './videos/videos.component';
-import { QuestionsReportComponent } from './questions-report/questions-report.component';
-import { QuestionsReportUserComponent } from './questions-report-user/questions-report-user.component';
+import { GeneralReportComponent } from './general-report/general-report.component';
+import { AnswersReportsComponent } from './answers-reports/answers-reports.component';
 
 export const AdminRoutes: Routes = [
   {
@@ -13,10 +13,17 @@ export const AdminRoutes: Routes = [
     children: [
       { path: 'tutorials', component: TutorialsComponent },
       { path: 'user-accounts', component: UsersAccountsComponent },
-      { path: 'questions-report', component: QuestionsReportComponent },
       {
-        path: 'questions-report-user/:id',
-        component: QuestionsReportUserComponent,
+        path: 'user-report/:id',
+        component: AnswersReportsComponent,
+      },
+      {
+        path: 'answers-report/:id',
+        component: AnswersReportsComponent,
+      },
+      {
+        path: 'general-report',
+        component: GeneralReportComponent,
       },
       { path: 'video/:sectionName', component: VideosComponent },
     ],

@@ -27,8 +27,12 @@ export class HomeComponent implements OnInit {
   sentencesAnswer: any[] = [];
   currentSentence: any;
   loading: boolean = false;
+
   isCorrect: boolean[] = [];
   isAnswered: number[] = [];
+  sentenceAnswer: string = '';
+  setenceAnswred: boolean = false;
+
   constructor(
     private store: Store,
     private adminService: AdminService,
@@ -40,16 +44,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getVideo(16);
-    this.quizService
-      .answerQuestion({
-        idQue: 24,
-        answerId: 2,
-      })
-      .subscribe({
-        next: (data) => {},
-        error: (error) => {},
-      });
+    this.getVideo(22);
   }
 
   getVideo(id: number): void {
@@ -84,18 +79,22 @@ export class HomeComponent implements OnInit {
     this.speakingAnswer = 1;
     this.setScore();
   }
-  checkMcqAnswer(question: any, index: number, answerNumber: number) {
-    this.showQuestion = false;
-    this.isCorrect[index] = question.correctAnswer == answerNumber;
-    this.isAnswered[index] = answerNumber;
-
+  checkMcqAnswer(
+    idQue: number,
+    answerId: number,
+    qIndex: number,
+    sIndex: number
+  ) {
     this.quizService
       .answerQuestion({
-        idQue: question.id,
-        answerId: 1,
+        idQue,
+        answerId,
       })
       .subscribe({
-        next: (data) => {},
+        next: (response: any) => {
+          this.isCorrect[qIndex] = response.data.isCorrectAnswer;
+          this.isAnswered[qIndex] = sIndex;
+        },
         error: (error) => {},
       });
     this.setScore();
@@ -114,21 +113,33 @@ export class HomeComponent implements OnInit {
     if (this.mcqAnswer) this.store.dispatch(changeScore({ score: this.score }));
   }
 
-  startService(index: number): void {
+  startService(): void {
     this.speech.text = '';
     this.speech.start();
-    this.speech.error = false;
-    this.currentSentence = index;
-  }
-  stop(index: any): void {
     this.loading = true;
-    setTimeout(() => {
-      this.sentencesAnswer[index] = this.speech.text.trim();
 
-      this.speech.stop();
-      this.speech.error = false;
-      this.currentSentence = undefined;
-      this.loading = false;
-    }, 1000);
+    this.setenceAnswred;
+
+    setTimeout(() => {
+      this.stop();
+    }, 2000);
+  }
+  stop(): void {
+    this.speech.stop();
+
+    if (this.speech.text)
+      this.quizService
+        .answerSentence({
+          videoId: 22,
+          sentenceUserAnswer: this.speech.text.trim(),
+        })
+        .subscribe({
+          next: (data) => {
+            this.sentenceAnswer = this.speech.text.trim();
+            this.loading = false;
+          },
+        });
+
+    this.currentSentence = undefined;
   }
 }

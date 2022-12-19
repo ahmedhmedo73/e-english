@@ -3,6 +3,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CategoriesService } from 'src/app/core/services/categories/categories.service';
 import { QuestionsService } from 'src/app/core/services/questions/questions.service';
+import { SentencesService } from 'src/app/core/services/sentences/sentences.service';
 import { AdminService } from '../../../../core/services/admin/admin.service';
 
 @Component({
@@ -24,25 +25,21 @@ export class VideosComponent implements OnInit {
   videos!: any;
   currentSectionPage!: string;
   selectedQuistionsList: any;
-  sentences: any;
+  sentences: any[] = [];
   questions: any;
 
   constructor(
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
     private adminService: AdminService,
-    private categoriesService: CategoriesService,
-    private questionsService: QuestionsService
+    private questionsService: QuestionsService,
+    private sentencesService: SentencesService
   ) {}
 
   ngOnInit(): void {
     this.videoForm = this.formBuilder.group({
       name: ['', Validators.required],
       files: ['', Validators.required],
-    });
-
-    this.sentenceForm = this.formBuilder.group({
-      Sentence: ['', Validators.required],
     });
 
     this.currentSectionPage =
@@ -87,16 +84,13 @@ export class VideosComponent implements OnInit {
   }
 
   addSentence() {
-    const formData = new FormData();
-    formData.append('Sentence', this.sentenceForm.controls['Sentence'].value);
-    formData.append('Vid', this.selectedVideoId.toString());
+    console.log('sad ');
 
-    this.adminService.AddSentence(formData).subscribe({
-      next: (data) => {},
-      error: (err) => {
-        this.showAddSentenceModal = false;
+    this.sentencesService.Add(this.sentenceForm.value).subscribe({
+      next: (data) => {
         this.openSentencesModal(this.selectedVideoId);
       },
+      error: (err) => {},
     });
   }
 
@@ -116,9 +110,15 @@ export class VideosComponent implements OnInit {
   openSentencesModal(id: number) {
     this.showSentencesModal = true;
     this.selectedVideoId = id;
-    this.adminService.GetVideo(id).subscribe({
-      next: (data: any) => {
-        this.sentences = data.spokenSentences.$values;
+
+    this.sentenceForm = this.formBuilder.group({
+      vid: [this.selectedVideoId],
+      Sentence: ['', Validators.required],
+    });
+
+    this.sentencesService.Get(id).subscribe({
+      next: (response: any) => {
+        this.sentences = response.data.$values;
       },
     });
   }
@@ -140,11 +140,11 @@ export class VideosComponent implements OnInit {
     });
   }
   deleteSentence(id: any) {
-    this.adminService.DeleteSentence(id).subscribe({
-      next: (data) => {},
-      error: (err) => {
+    this.sentencesService.Delete(id).subscribe({
+      next: (data) => {
         this.openSentencesModal(this.selectedVideoId);
       },
+      error: (err) => {},
     });
   }
 
