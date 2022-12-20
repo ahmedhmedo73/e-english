@@ -1,8 +1,17 @@
 <ng-container *ngIf="!isAdmin">
   <app-navbar></app-navbar>
 </ng-container>
-<router-outlet></router-outlet>
-<ng-container *ngIf="!isAdmin">
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <app-side-bar></app-side-bar>
+    </div>
+    <div class="col-md-9 pl-3 pages">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+<!-- <ng-container *ngIf="!isAdmin">
   <app-footer></app-footer>
-</ng-container>
-<p-toast position="top-right"></p-toast>
+</ng-container> -->
+<p-toast position="top-center"></p-toast>

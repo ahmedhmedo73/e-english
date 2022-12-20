@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import jwtDecode from 'jwt-decode';
 import { environment } from 'src/app/core/environments/environment';
+import { MessageService } from 'primeng/api';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +13,11 @@ export class AuthService {
   currentUser = new BehaviorSubject(null);
   isLogin: boolean | undefined;
 
-  constructor(private _HttpClient: HttpClient, private _Router: Router) {
+  constructor(
+    private _HttpClient: HttpClient,
+    private _Router: Router,
+    private messageService: MessageService
+  ) {
     if (
       localStorage.getItem('token') &&
       localStorage.getItem('token') != null
@@ -37,6 +42,11 @@ export class AuthService {
     this.currentUser.next(null);
     localStorage.removeItem('token');
     this._Router.navigate(['/']);
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Log Out',
+      detail: 'Logged Out Successfully',
+    });
   }
 
   getToken() {

@@ -1,0 +1,27 @@
+.side-bar {
+  width: 250px;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  top: 74px;
+  background: var(--dark);
+  box-shadow: 1px 0 14px 0 rgba(0, 0, 0, 0.15);
+}
+
+.link {
+  color: white;
+}
+
+.active-link {
+  border-left: 4px solid var(--orange);
+  background: white;
+  color: var(--dark);
+  font-weight: 500;
+}
+
+.logout {
+  bottom: 0;
+  i {
+    color: white;
+  }
+}

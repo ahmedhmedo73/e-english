@@ -1,5 +1,8 @@
-header{
+header {
   background: white;
+  position: fixed;
+  left: 0;
+  right: 0;
 }
 .logo {
   width: 80px;
@@ -18,7 +21,7 @@ h2 {
 }
 .counter {
   width: 200px;
-  height: 80px;
+  height: 40px;
   border: 1px solid rgba(0, 0, 0, 0.473);
   background-color: rgba(192, 191, 191, 0.123);
   border-radius: 50px;
@@ -43,9 +46,7 @@ h2 {
     position: relative;
   }
   .dropdown-toggle::after {
-    position: absolute;
-    top: 20px;
-    right: -10px;
+    border: 0;
   }
 }
 .play-mode {
@@ -106,4 +107,13 @@ h2 {
     color: #de1f26;
     font-weight: 500;
   }
+}
+
+.person-container {
+  width: 216px;
+}
+
+.arrow-down-icon {
+  width: 30px;
+  height: 20px;
 }

@@ -26,10 +26,10 @@ export class AdminService {
     });
   }
 
-  GetVideo(id: any) {
-    return this._HttpClient.get(
-      environment.endpoint + 'VidUser/GetVideo?id=' + id
-    );
+  GetVideo(data: any) {
+    return this._HttpClient.get(environment.endpoint + 'VidUser/GetVideo', {
+      params: data,
+    });
   }
 
   DeleteVideo(id: number) {

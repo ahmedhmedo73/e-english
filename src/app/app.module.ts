@@ -22,6 +22,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { TokenInterceptor } from './core/interceptors/auth.interceptor';
 import { SharedModule } from './core/shared/shared.module';
 import { MessageService } from 'primeng/api';
+import { SideBarComponent } from './view/layout/side-bar/side-bar.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { MessageService } from 'primeng/api';
     ClickStopPropagationDirective,
     StarterComponent,
     AboutUsComponent,
+    SideBarComponent,
   ],
   imports: [
     BrowserModule,

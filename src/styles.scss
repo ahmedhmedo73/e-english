@@ -3,6 +3,15 @@
 @import "./assets/fontawesome-free-6.1.2-web/scss/solid.scss";
 @import "./assets/fontawesome-free-6.1.2-web/scss/brands.scss";
 
+:root {
+  --dark: rgba(38, 50, 56);
+  --orange: #ff5a57;
+}
+
+.text-orange {
+  color: var(--orange);
+}
+
 html,
 body {
   position: relative;

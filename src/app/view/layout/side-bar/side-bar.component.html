@@ -1,0 +1,21 @@
+<div class="container side-bar d-flex flex-column justify-content-between">
+  <div class="row">
+    <div class="side-bar-header col-md-12 d-flex justify-content-center py-4">
+      <p class="text-white">Welcome Ahmed!</p>
+    </div>
+    <a
+      class="text-decoration-none w-100 col-md-12 py-2 px-4 link"
+      *ngFor="let tab of tabs"
+      [ngClass]="{ 'active-link': route == tab.route }"
+      [routerLink]="tab.route"
+      >{{ tab.title }}</a
+    >
+  </div>
+  <a
+    (click)="signOut()"
+    class="logout py-2 text-decoration-none d-flex justify-content-between align-items-center px-3"
+  >
+    <p class="text-white">Logout</p>
+    <i class="fa-solid fa-right-from-bracket"></i>
+  </a>
+</div>

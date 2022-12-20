@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 
 @Component({
@@ -17,7 +18,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -52,18 +54,31 @@ export class LoginComponent implements OnInit {
   }
   login() {
     if (this.loginForm.valid)
-      this.authService.login(this.loginForm.value).subscribe((response) => {
-        localStorage.setItem('token', response.token);
-        this.authService.saveCurrentUser();
-
-        switch (response.roles.$values[0]) {
-          case 'Admin':
-            this.router.navigate(['/admin/tutorials']);
-            break;
-          case 'User':
-            this.router.navigate(['/home']);
-            break;
-        }
+      this.authService.login(this.loginForm.value).subscribe({
+        next: (response) => {
+          localStorage.setItem('token', response.token);
+          this.authService.saveCurrentUser();
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Login',
+            detail: 'Welcome ' + response.roles.$values[0] + ' 😁',
+          });
+          switch (response.roles.$values[0]) {
+            case 'Admin':
+              this.router.navigate(['/admin/tutorials']);
+              break;
+            case 'User':
+              this.router.navigate(['/home']);
+              break;
+          }
+        },
+        error: (response: any) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Register',
+            detail: response.error,
+          });
+        },
       });
   }
 }

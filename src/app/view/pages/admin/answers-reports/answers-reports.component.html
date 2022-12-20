@@ -13,23 +13,34 @@
         <nz-option [nzValue]="false" nzLabel="Sentences"></nz-option>
       </nz-select>
     </div>
-    <div class="col-md-12 mb-3 mt-5" *ngIf="answers.length">
-      <app-doughnut-chart
-        [total]="totalAnswered"
-        [wrong]="totalAnsweredWrong"
-        [correct]="totalAnsweredRight"
-      ></app-doughnut-chart>
-    </div>
-    <div class="col-md-12" *ngIf="isQuestionReport && answers.length">
-      <app-questions-answers
-        [questionsAnswers]="answers"
-      ></app-questions-answers>
-    </div>
+    <ng-container *ngIf="answers.length">
+      <div class="col-md-12 mb-3 mt-5">
+        <app-doughnut-chart
+          [total]="totalAnswered"
+          [wrong]="totalAnsweredWrong"
+          [correct]="totalAnsweredRight"
+        ></app-doughnut-chart>
+      </div>
+      <div class="col-md-12" *ngIf="isQuestionReport">
+        <app-questions-answers
+          [questionsAnswers]="answers"
+        ></app-questions-answers>
+      </div>
 
-    <div class="col-md-12" *ngIf="!isQuestionReport && answers.length">
-      <app-sentences-answers
-        [sentencesAnswers]="answers"
-      ></app-sentences-answers>
+      <div class="col-md-12" *ngIf="!isQuestionReport">
+        <app-sentences-answers
+          [sentencesAnswers]="answers"
+        ></app-sentences-answers>
+      </div>
+    </ng-container>
+    <div
+      class="col-md-12 w-100 d-flex justify-content-center align-items-center no-data"
+      *ngIf="!answers.length"
+    >
+      <p>
+        This User Didn't Answer Any
+        {{ isQuestionReport ? "Question" : "Sentence" }} Yet 😥
+      </p>
     </div>
   </div>
 </div>

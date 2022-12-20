@@ -7,6 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 @Component({
   selector: 'app-register',
@@ -23,7 +24,8 @@ export class RegisterComponent implements OnInit {
   constructor(
     private _AuthService: AuthService,
     private _Router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -46,12 +48,24 @@ export class RegisterComponent implements OnInit {
   }
   register() {
     if (this.registerForm.valid) {
-      this._AuthService
-        .register(this.registerForm.value)
-        .subscribe((response) => {
+      this._AuthService.register(this.registerForm.value).subscribe({
+        next: (response) => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Register',
+            detail: 'Welcome 😁',
+          });
           localStorage.setItem('token', response.token);
           this._Router.navigate(['/home']);
-        });
+        },
+        error: (response: any) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Register',
+            detail: response.error,
+          });
+        },
+      });
     }
   }
 

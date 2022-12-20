@@ -20,6 +20,12 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: '',
+    loadChildren: () =>
+      import('./view/pages/video/video.module').then((m) => m.VideoModule),
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'profile',
     loadChildren: () =>
       import('./view/pages/profile/profile.module').then(

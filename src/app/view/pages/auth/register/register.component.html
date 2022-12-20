@@ -37,7 +37,7 @@
             </div>
             <div class="col-md-6">
               <div class="col-md-12 my-1">
-                <label for="name" class="form-label">UserName</label>
+                <label for="name" class="form-label">User Name</label>
                 <input
                   type="text"
                   id="name"
@@ -48,7 +48,7 @@
             </div>
             <div class="col-md-6">
               <div class="col-md-12 my-1">
-                <label for="email" class="form-label">email</label>
+                <label for="email" class="form-label">Email</label>
                 <input
                   type="text"
                   id="email"
@@ -72,7 +72,9 @@
 
             <div class="col-md-6">
               <div class="col-md-12 my-1">
-                <label for="password" class="form-label">re password</label>
+                <label for="password" class="form-label"
+                  >Confirm Password</label
+                >
                 <input
                   type="password"
                   id="repassword"
@@ -83,7 +85,7 @@
             </div>
             <div class="col-md-6">
               <div class="col-md-12 my-1">
-                <label for="age" class="form-label">age</label>
+                <label for="age" class="form-label">Age</label>
                 <input
                   type="text"
                   id="age"
@@ -95,27 +97,14 @@
 
             <div class="col-md-6">
               <div class="col-md-12 my-1">
-                <label for="gender" class="form-label">gender</label>
-                <input
-                  type="text"
-                  id="gender"
-                  class="form-control"
-                  formControlName="gender"
-                />
+                <label for="gender" class="form-label">Gender</label>
+                <nz-select formControlName="gender" class="w-100">
+                  <nz-option [nzValue]="'male'" nzLabel="Male"></nz-option>
+                  <nz-option [nzValue]="'female'" nzLabel="Female"></nz-option>
+                </nz-select>
               </div>
             </div>
-
           </div>
-          <!-- <div
-            style="color: #ff7355"
-            *ngIf="
-              registerForm.get(['passwords', 'password'])?.value !=
-                registerForm.get(['passwords', 'confirm_password'])?.value &&
-              registerForm.get(['passwords', 'confirm_password'])?.value != null
-            "
-          >
-            Password does not match
-          </div> -->
           <input
             class="w-100 btn btn-lg mt-3"
             type="submit"
