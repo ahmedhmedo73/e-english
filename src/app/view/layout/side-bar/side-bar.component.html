@@ -1,7 +1,17 @@
 <div class="container side-bar d-flex flex-column justify-content-between">
   <div class="row">
-    <div class="side-bar-header col-md-12 d-flex justify-content-center py-4">
-      <p class="text-white">Welcome Ahmed!</p>
+    <div class="side-bar-header col-md-12 d-flex py-4">
+      <p class="text-white m-auto" *ngIf="!isVideoPage">Welcome Ahmed!</p>
+      <a
+        *ngIf="isVideoPage"
+        class="w-100 d-flex gap-3 justify-content-center align-items-center text-decoration-none text-white"
+        routerLink="/home"
+      >
+        <i class="fa-solid fa-arrow-left"></i>
+        <span>
+          {{ currentCategoryName + " Level" }}
+        </span>
+      </a>
     </div>
     <a
       class="text-decoration-none w-100 col-md-12 py-2 px-4 link"

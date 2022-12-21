@@ -11,29 +11,38 @@ export class AdminService {
   currentUser = new BehaviorSubject(null);
   isLogin: boolean | undefined;
 
-  constructor(private _HttpClient: HttpClient, private _Router: Router) {}
+  constructor(private httpClient: HttpClient, private _Router: Router) {}
 
   AddVideo(formData: any) {
-    return this._HttpClient.post(
+    return this.httpClient.post(
       environment.endpoint + 'VidAdmin/uploadvideo',
       formData
     );
   }
 
   GetVideos(categoryId: string) {
-    return this._HttpClient.get(environment.endpoint + 'Section/GitVideo', {
+    return this.httpClient.get(environment.endpoint + 'Section/GitVideo', {
       params: { categoryId },
     });
   }
 
   GetVideo(data: any) {
-    return this._HttpClient.get(environment.endpoint + 'VidUser/GetVideo', {
+    return this.httpClient.get(environment.endpoint + 'VidUser/GetVideo', {
       params: data,
     });
   }
 
+  GetVideosByCategoryName(categoryName: string) {
+    return this.httpClient.get(
+      environment.endpoint + 'VidUser/GetVideosByCategoryName',
+      {
+        params: { categoryName },
+      }
+    );
+  }
+
   DeleteVideo(id: number) {
-    return this._HttpClient.delete(
+    return this.httpClient.delete(
       environment.endpoint + 'VidAdmin/Deletevid?id=' + id
     );
   }

@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CategoriesService } from 'src/app/core/services/categories/categories.service';
 import { QuestionsService } from 'src/app/core/services/questions/questions.service';
 import { SentencesService } from 'src/app/core/services/sentences/sentences.service';
-import { AdminService } from '../../../../core/services/admin/admin.service';
+import { AdminService } from 'src/app/core/services/admin/admin.service';
 
 @Component({
   selector: 'app-videos',

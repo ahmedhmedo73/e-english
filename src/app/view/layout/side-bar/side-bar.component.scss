@@ -1,11 +1,15 @@
 .side-bar {
-  width: 250px;
+  width: 200px;
   position: fixed;
   left: 0;
   bottom: 0;
   top: 74px;
   background: var(--dark);
   box-shadow: 1px 0 14px 0 rgba(0, 0, 0, 0.15);
+}
+
+.side-bar-header {
+  background: var(--dark2);
 }
 
 .link {
