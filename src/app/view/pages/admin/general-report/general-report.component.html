@@ -1,0 +1,122 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 d-flex justify-content-evenly my-5">
+      <div
+        class="stats rounded-4 shadow-lg bg-white p-3 mt-3 d-flex flex-column align-items-center"
+      >
+        <h4>Categories</h4>
+        <p>{{ reports.totalCategories }}</p>
+      </div>
+      <div
+        class="stats rounded-4 shadow-lg bg-white p-3 d-flex flex-column align-items-center"
+      >
+        <h4>Videos</h4>
+        <p>{{ reports.totalVideos }}</p>
+      </div>
+      <div
+        class="stats rounded-4 shadow-lg bg-white p-3 d-flex flex-column align-items-center"
+      >
+        <h4>Questions</h4>
+        <p>{{ reports.totalQuestions }}</p>
+      </div>
+      <div
+        class="stats rounded-4 shadow-lg bg-white p-3 mt-3 d-flex flex-column align-items-center"
+      >
+        <h4>Users</h4>
+        <p>{{ reports.totalUsers }}</p>
+      </div>
+    </div>
+    <div class="col-md-12 d-flex mt-5">
+      <nz-table
+        class="border border-1"
+        [nzShowPagination]="false"
+        [nzData]="wrongSentenceAnswers"
+      >
+        <thead>
+          <tr>
+            <th>Most SenTences Worng Answered</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let wrongSentenceAnswer of wrongSentenceAnswers">
+            <td>
+              <p class="text-center">
+                {{ wrongSentenceAnswer.name }}
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+      <nz-table
+        class="border border-1"
+        [nzShowPagination]="false"
+        [nzData]="rightSentenceAnswers"
+      >
+        <thead>
+          <tr>
+            <th>Most SenTences Correctly Answered</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let rightSentenceAnswer of rightSentenceAnswers">
+            <td>
+              <p class="text-center">
+                {{ rightSentenceAnswer.name }}
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+      <nz-table
+        class="border border-1"
+        [nzShowPagination]="false"
+        [nzData]="wrongQuestionsAnswers"
+      >
+        <thead>
+          <tr>
+            <th>Most Questions Worng Answered</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let wrongQuestionsAnswer of wrongQuestionsAnswers">
+            <td>
+              <p class="text-center">
+                {{ wrongQuestionsAnswer.name }}
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+      <nz-table
+        class="border border-1"
+        [nzShowPagination]="false"
+        [nzData]="rightQuestionsAnswers"
+      >
+        <thead>
+          <tr>
+            <th>Most Questions Correctly Answered</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let rightQuestionsAnswer of rightQuestionsAnswers">
+            <td>
+              <p class="text-center">
+                {{ rightQuestionsAnswer.name }}
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+    <div class="col-md-12 my-5">
+      <canvas
+        baseChart
+        [options]="LineChartOptions"
+        [data]="LineChartDatasets"
+        [type]="'line'"
+        style="width: 100%"
+      >
+      </canvas>
+    </div>
+  </div>
+</div>

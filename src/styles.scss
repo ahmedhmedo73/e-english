@@ -13,6 +13,23 @@
   color: var(--orange);
 }
 
+.btn-orange {
+  background: var(--orange);
+  color: white;
+  &:focus {
+    background: var(--orange);
+    color: white;
+  }
+  &:hover {
+    background: white;
+    color: var(--orange);
+    border: 1px solid var(--orange);
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
 html,
 body {
   position: relative;
@@ -35,6 +52,6 @@ p {
   width: 100%;
 }
 
-* {
-  box-sizing: border-box;
+.ant-tabs > .ant-tabs-nav {
+  display: none;
 }

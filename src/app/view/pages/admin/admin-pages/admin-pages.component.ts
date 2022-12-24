@@ -23,11 +23,6 @@ export class AdminPagesComponent implements OnInit {
       icon: 'assets/icons/person.png',
     },
     {
-      name: 'Answers Report',
-      route: '/admin/answers-report',
-      icon: 'assets/icons/charts.png',
-    },
-    {
       name: 'General Report',
       route: '/admin/general-report',
       icon: 'assets/icons/charts.png',

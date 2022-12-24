@@ -1,12 +1,37 @@
 <div class="container-fluid">
   <div class="row d-flex justify-content-between">
+    <div
+      class="col-md-12 d-flex flex-wrap align-items-center justify-content-between px-3"
+    >
+      <a [routerLink]="['/']" class="d-flex align-items-center">
+        <img class="logo" src="../../../../assets/img/Logo.png" alt="" />
+      </a>
+
+      <ul class="nav d-flex justify-content-end mb-md-0">
+        <li class="about">
+          <a [routerLink]="['/AboutUs']">About Us</a>
+        </li>
+        <li>
+          <a class="btn login ms-2" [routerLink]="['/login']">Log in</a>
+        </li>
+        <li>
+          <a
+            class="btn btn-outline-dark ms-2 register"
+            [routerLink]="['/register']"
+            >Register</a
+          >
+        </li>
+      </ul>
+    </div>
+
     <div class="col-md-5 upper-des">
       <h1>Learn English!</h1>
       <h1>It&#39;s fun and free.</h1>
       <p>
         project-name helps you improve your English language skills on your own
-        through short video clips. <br> Learning and improving English is more
-        enjoyable than ever with project-name video learning environment.
+        through short video clips. <br />
+        Learning and improving English is more enjoyable than ever with
+        project-name video learning environment.
       </p>
     </div>
     <div class="col-md-6 my-5">

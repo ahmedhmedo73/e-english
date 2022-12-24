@@ -3,6 +3,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { AdminService } from 'src/app/core/services/admin/admin.service';
 import { CategoriesService } from 'src/app/core/services/categories/categories.service';
+import { TabsService } from 'src/app/core/services/tabs/tabs.service';
 
 @Component({
   selector: 'app-side-bar',
@@ -32,7 +33,8 @@ export class SideBarComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private adminService: AdminService,
-    private router: Router
+    private router: Router,
+    private tabsService: TabsService
   ) {}
 
   ngOnInit(): void {
@@ -45,24 +47,14 @@ export class SideBarComponent implements OnInit {
           if (this.isVideoPage) {
             this.currentCategoryName = this.url[2];
             this.currentVideoName = this.url[3];
-
-            this.adminService
-              .GetVideosByCategoryName(this.currentCategoryName)
-              .subscribe({
-                next: (response: any) => {
-                  this.tabs = response.data.$values.map((data: any) => {
-                    return {
-                      title: data.name,
-                      route:
-                        '/video/' + this.currentCategoryName + '/' + data.name,
-                    };
-                  });
-                },
-              });
-          } else {
-            this.tabs = this.defaultTabs;
           }
         }
+      },
+    });
+
+    this.tabsService.tabs.subscribe({
+      next: (data) => {
+        this.tabs = data;
       },
     });
   }

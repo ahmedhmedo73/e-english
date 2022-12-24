@@ -1,13 +1,13 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { MessageService } from 'primeng/api';
 import { environment } from 'src/app/core/environments/environment';
 import { changeScore } from 'src/app/core/store/actions/score.actions';
-import { AdminService } from '../../../../core/services/admin/admin.service';
-import { QuizService } from '../../../../core/services/quiz/quiz.service';
-import { SpeechService } from '../../../../core/services/speech/speech.service';
+import { AdminService } from 'src/app/core/services/admin/admin.service';
+import { QuizService } from 'src/app/core/services/quiz/quiz.service';
+import { SpeechService } from 'src/app/core/services/speech/speech.service';
+import { TabsService } from 'src/app/core/services/tabs/tabs.service';
 declare let $: any;
 
 @Component({
@@ -22,8 +22,8 @@ export class IndexComponent implements OnInit {
   mcqAnswer: number = -1;
   score: number = 0;
   video: any;
-  questions: any;
-  sentences: any;
+  questions: any[] = [];
+  sentences: any[] = [];
   URL: string = environment.videoPath;
   text: any;
   sentenceISCorrect!: boolean;
@@ -35,15 +35,29 @@ export class IndexComponent implements OnInit {
   isAnswered: number[] = [];
   sentenceAnswer: string = '';
   setenceAnswred: boolean = false;
+  isVideoPlaying: boolean = false;
+
+  currentTab: number = 3;
+  tabsLength: number = 0;
+  progressBar: number = 100;
+  nextPage: boolean = false;
+  answerId: any;
+  sIndex: any;
+  sentenceAnswerIsCorrect: boolean = false;
+  micStatus: boolean = false;
+  islastLesson: boolean = false;
+  nextVideoName: string = '';
+  categoryName: string = '';
 
   constructor(
     private store: Store,
     private adminService: AdminService,
     public speech: SpeechService,
-    private notification: NzNotificationService,
     private quizService: QuizService,
     private messageService: MessageService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private tabsService: TabsService,
+    private router: Router
   ) {
     this.speech.init();
   }
@@ -51,7 +65,16 @@ export class IndexComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.params.subscribe({
       next: (data: any) => {
+        this.categoryName = data.category;
         this.getVideo({ videoName: data.video, CategoryName: data.category });
+      },
+    });
+
+    this.tabsService.isLastLesson.subscribe({
+      next: (data) => {
+        // console.log(data, 'last');
+
+        this.islastLesson = data;
       },
     });
   }
@@ -61,6 +84,7 @@ export class IndexComponent implements OnInit {
       next: (response: any) => {
         this.video = response.data;
         this.questions = response.data.questions.$values;
+        this.tabsLength = this.questions.length + 1;
         this.sentences = response.data.spokenSentences.$values;
 
         const formData = new FormData();
@@ -76,30 +100,33 @@ export class IndexComponent implements OnInit {
 
   startVideo(status: string) {
     $('video').get(0).play();
+    this.isVideoPlaying = true;
     $(status).fadeOut('slow');
     setTimeout(() => {
       if (!this.played) {
         this.played = true;
       }
       $('.retry').fadeIn('slow');
+      this.isVideoPlaying = false;
     }, $('video').get(0).duration * 1000);
   }
 
-  checkMcqAnswer(
-    idQue: number,
-    answerId: number,
-    qIndex: number,
-    sIndex: number
-  ) {
+  checkMcqAnswer(idQue: number, qIndex: number) {
     this.quizService
       .answerQuestion({
         idQue,
-        answerId,
+        answerId: this.answerId,
       })
       .subscribe({
         next: (response: any) => {
           this.isCorrect[qIndex] = response.data.isCorrectAnswer;
-          this.isAnswered[qIndex] = sIndex;
+          this.isAnswered[qIndex] = this.sIndex;
+
+          console.log(this.isCorrect, 'this.isCorrect');
+          console.log(this.isAnswered, 'this.isAnswered');
+
+          this.sIndex = undefined;
+          this.answerId = undefined;
           if (response.data.isCorrectAnswer) {
             this.messageService.add({
               severity: 'success',
@@ -139,12 +166,12 @@ export class IndexComponent implements OnInit {
 
     this.setenceAnswred;
 
-    setTimeout(() => {
-      this.stop();
-    }, 2000);
+    this.micStatus = true;
   }
 
   stop(): void {
+    this.micStatus = false;
+
     this.speech.stop();
 
     if (this.speech.text)
@@ -158,6 +185,7 @@ export class IndexComponent implements OnInit {
             this.sentenceAnswer = this.speech.text.trim();
             this.loading = false;
             if (response.data.isCorrectAnswer) {
+              this.sentenceAnswerIsCorrect = true;
               this.messageService.add({
                 severity: 'success',
                 summary: 'Sentence',
@@ -174,5 +202,26 @@ export class IndexComponent implements OnInit {
         });
 
     this.currentSentence = undefined;
+  }
+
+  nextTab(): void {
+    if (this.currentTab < this.tabsLength - 1) {
+      this.currentTab++;
+    }
+  }
+
+  selectAnswer(answerId: number, sIndex: number) {
+    this.answerId = answerId;
+    this.sIndex = sIndex;
+  }
+
+  nextLesson(): void {
+    let route = '';
+    if (this.islastLesson) {
+      route = '/home';
+    } else {
+      route = `/video/${this.categoryName}/${this.tabsService.nextVideoName}`;
+    }
+    this.router.navigate([route]);
   }
 }

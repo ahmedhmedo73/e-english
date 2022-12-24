@@ -1,0 +1,29 @@
+<div class="row" *ngIf="user">
+  <div class="col-md-12 mb-2" *ngIf="user.picture">
+    <img [src]="'http://127.0.0.1:5500/' + 'wwwroot' + user.picture" alt="" />
+  </div>
+  <div class="col-md-6 d-flex align-items-center">
+    <h4>First Name</h4>
+    <p>: {{ user.fname }}</p>
+  </div>
+  <div class="col-md-6 d-flex align-items-center">
+    <h4>Last Name</h4>
+    <p>: {{ user.lname }}</p>
+  </div>
+  <div class="col-md-6 d-flex align-items-center">
+    <h4>Age</h4>
+    <p>: {{ user.age }}</p>
+  </div>
+  <div class="col-md-6 d-flex align-items-center">
+    <h4>Gender</h4>
+    <p>: {{ user.gender }}</p>
+  </div>
+  <div class="col-md-6 d-flex align-items-center">
+    <h4>Email</h4>
+    <p>: {{ user.email }}</p>
+  </div>
+  <div class="col-md-6 d-flex align-items-center">
+    <h4>UserName</h4>
+    <p>: {{ user.username }}</p>
+  </div>
+</div>

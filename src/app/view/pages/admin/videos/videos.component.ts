@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CategoriesService } from 'src/app/core/services/categories/categories.service';
 import { QuestionsService } from 'src/app/core/services/questions/questions.service';
@@ -26,8 +32,8 @@ export class VideosComponent implements OnInit {
   currentSectionPage!: string;
   selectedQuistionsList: any;
   sentences: any[] = [];
-  questions: any;
-
+  questions: any[] = [];
+  selectedAnswerIndex!: number;
   constructor(
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
@@ -46,6 +52,7 @@ export class VideosComponent implements OnInit {
       this.activatedRoute.snapshot.paramMap.get('sectionName') || '';
 
     this.getVideos();
+    this.createAddQestionForm();
   }
 
   getVideos() {
@@ -78,6 +85,7 @@ export class VideosComponent implements OnInit {
       next: (data) => {
         this.showAddQuistionModal = false;
         this.openQuistionsModal(this.selectedVideoId);
+        this.createAddQestionForm();
       },
       error: (err) => {},
     });
@@ -150,26 +158,29 @@ export class VideosComponent implements OnInit {
 
   ShowAddQuistionModal() {
     this.showAddQuistionModal = true;
+    this.quistionForm.controls['vid'].setValue(this.selectedVideoId);
+  }
 
+  createAddQestionForm() {
     this.quistionForm = this.formBuilder.group({
-      vid: [this.selectedVideoId],
+      vid: [],
       question: ['', Validators.required],
       answerData: this.formBuilder.array([
         this.formBuilder.group({
           answer: ['', Validators.required],
-          isCorrectAnswer: ['', Validators.required],
+          isCorrectAnswer: [null, Validators.required],
         }),
         this.formBuilder.group({
           answer: ['', Validators.required],
-          isCorrectAnswer: ['', Validators.required],
+          isCorrectAnswer: [null, Validators.required],
         }),
         this.formBuilder.group({
           answer: ['', Validators.required],
-          isCorrectAnswer: ['', Validators.required],
+          isCorrectAnswer: [null, Validators.required],
         }),
         this.formBuilder.group({
           answer: ['', Validators.required],
-          isCorrectAnswer: ['', Validators.required],
+          isCorrectAnswer: [null, Validators.required],
         }),
       ]),
     });
@@ -177,5 +188,12 @@ export class VideosComponent implements OnInit {
 
   answers(): FormArray {
     return this.quistionForm.get('answerData') as FormArray;
+  }
+
+  setIsCorrectAnswer(i: number) {
+    let formArray = this.quistionForm.controls['answerData'] as FormArray;
+    formArray.controls.forEach((control: any, index) => {
+      control.controls['isCorrectAnswer'].setValue(i == index ? true : false);
+    });
   }
 }

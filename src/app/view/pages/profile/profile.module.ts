@@ -9,6 +9,9 @@ import { ProfileRoutes } from './profile.routes';
 import { StatsComponent } from './stats/stats.component';
 import { RankComponent } from './rank/rank.component';
 import { SharedModule } from 'src/app/core/shared/shared.module';
+import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { UserInformationComponent } from './components/user-information/user-information.component';
 @NgModule({
   declarations: [
     IndexComponent,
@@ -17,6 +20,9 @@ import { SharedModule } from 'src/app/core/shared/shared.module';
     ProfileSettingsComponent,
     StatsComponent,
     RankComponent,
+    EditProfileComponent,
+    ChangePasswordComponent,
+    UserInformationComponent,
   ],
   imports: [CommonModule, RouterModule.forChild(ProfileRoutes), SharedModule],
 })

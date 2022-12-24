@@ -1,100 +1,209 @@
-<div class="container bg-white">
+<div class="container">
   <div class="row" *ngIf="video">
-    <div class="col-md-12 main position-relative">
+    <div class="col-md-12 main position-relative p-0 rounded rounded-2">
       <video
-        [src]="'http://127.0.0.1:5500/Gp1/' + video?.link_Vid"
+        [src]="'http://127.0.0.1:5500/' + video?.link_Vid"
         type="video/mp4"
       ></video>
-      <div class="overlay position-absolute h-100">
+      <div
+        class="overlay position-absolute h-100 d-flex justify-content-center align-items-center"
+        [ngClass]="{ 'bg-tranparent': isVideoPlaying }"
+      >
         <a (click)="startVideo('.play')" class="play" *ngIf="!played">
-          <i class="fa-solid fa-circle-play"></i>
+          <img
+            src="../../../.././../assets/icons/play.png"
+            alt=""
+            class="video-icon"
+          />
         </a>
-        <a (click)="startVideo('.retry')" class="retry" *ngIf="played">
-          <i class="fas fa-redo"></i>
-        </a>
-      </div>
-    </div>
-    <div class="bottom col-md-12 d-flex justify-content-between">
-      <div class="left">
-        <h3>{{ video?.name }}</h3>
-        <p>
-          <span>{{ video?.viewsCount }}</span> views
-        </p>
-      </div>
-      <div class="right d-flex">
-        <div class="features d-flex">
-          <img src="assets/icons/addtolist.png" alt="" />
-          <p>add to list</p>
-        </div>
-        <div class="features d-flex">
-          <i class="fa-solid fa-share-nodes"></i>
-          <p>share</p>
-        </div>
-      </div>
-    </div>
-    <!-- *ngIf="played" -->
-    <ng-container>
-      <div class="col-md-12 questions">
-        <h2>Questions</h2>
-        <div
-          class="content my-3 p-3 rounded-2"
-          *ngFor="let question of questions; let index = index"
+        <a
+          (click)="startVideo('.retry')"
+          class="retry text-decoration-none"
+          *ngIf="played"
         >
-          <h3>{{ question.question }}</h3>
-          <div class="choises row w-100">
-            <div
-              class="choise col-md-6 mb-3"
-              *ngFor="let answer of question.answers.$values; let i = index"
-            >
-              <a
-                (click)="checkMcqAnswer(question.id, answer.id, index, i + 1)"
-                [ngClass]="{
-                  correctAnswer: isCorrect[index] && isAnswered[index] == i + 1,
-                  wrongAnswer: !isCorrect[index] && isAnswered[index] == i + 1,
-                  disabledAnswer: isAnswered[index]
-                }"
-              >
-                <span>{{ answer.answerText }}</span>
-              </a>
+          <i class="fas fa-redo text-dark"></i>
+        </a>
+      </div>
+    </div>
+    <div
+      class="col-md-12 d-flex flex-column px-4 py-2 bg-white views shadow-sm"
+    >
+      <h3>{{ video?.name }}</h3>
+      <p>
+        <span>{{ video?.viewsCount }}</span> views
+      </p>
+    </div>
+
+    <div
+      class="col-md-12 quiz bg-white rounded-4 my-4 px-0 shadow-sm"
+      *ngIf="questions.length != 0 && sentences.length != 0"
+    >
+      <h3 class="text-center my-3">Quiz</h3>
+      <nz-progress
+        [nzPercent]="(currentTab + 1) * (100 / tabsLength)"
+        nzSize="small"
+        [nzStrokeColor]="'#ff5a57'"
+        [nzShowInfo]="false"
+      ></nz-progress>
+      <nz-tabset [nzSelectedIndex]="currentTab">
+        <nz-tab
+          *ngFor="let question of questions; let index = index"
+          [nzTitle]="'tab' + index"
+        >
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12 d-flex justify-content-center py-5">
+                <h3>{{ question.question }}?</h3>
+              </div>
+              <div class="col-md-12 answers px-4 mb-5">
+                <label
+                  *ngFor="let answer of question.answers.$values; let i = index"
+                  class="answer shadow rounded-4 p-4 d-flex gap-3"
+                  [ngClass]="{
+                    'answer-checked': sIndex == i + 1,
+                    correctAnswer:
+                      isCorrect[index] && isAnswered[index] == i + 1,
+                    wrongAnswer:
+                      !isCorrect[index] && isAnswered[index] == i + 1,
+                    disabledAnswer: isAnswered[index]
+                  }"
+                  [for]="'answer' + i"
+                  (click)="selectAnswer(answer.id, i + 1)"
+                >
+                  <input type="radio" name="answer" [id]="'answer' + i" />
+                  <p>
+                    {{ answer.answerText }}
+                  </p>
+                </label>
+              </div>
+              <hr class="m-0" />
+              <div class="col-md-12 p-4 d-flex justify-content-end">
+                <button
+                  class="btn btn-orange"
+                  (click)="
+                    isAnswered[index]
+                      ? nextTab()
+                      : checkMcqAnswer(question.id, index)
+                  "
+                >
+                  <p *ngIf="!isAnswered[index]">Submit</p>
+                  <p *ngIf="isAnswered[index]">
+                    {{
+                      currentTab == tabsLength - 1 ? "Next Question" : "Next"
+                    }}
+                  </p>
+                </button>
+              </div>
             </div>
+          </div>
+        </nz-tab>
+        <nz-tab *ngIf="sentences.length">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12 d-flex justify-content-center py-4">
+                <h3>{{ sentences[0].sentence }}</h3>
+              </div>
+              <div class="col-md-12 d-flex justify-content-center">
+                <button
+                  class="mic-container rounded-circle d-flex justify-content-center bg-white shadow p-2"
+                  (click)="micStatus ? stop() : startService()"
+                  [disabled]="sentenceAnswerIsCorrect"
+                >
+                  <div
+                    class="mic-circle p-1 rounded-circle d-flex justify-content-center align-items-center"
+                  >
+                    <i class="fa-solid fa-microphone" *ngIf="!micStatus"></i>
+                    <i class="fa-solid fa-stop" *ngIf="micStatus"></i>
+                  </div>
+                </button>
+              </div>
+              <div class="col-md-12 my-3 d-flex justify-content-center">
+                <h3>{{ sentenceAnswer || "--" }}</h3>
+              </div>
+              <hr />
+              <div class="col-md-12 p-4 d-flex justify-content-end">
+                <button
+                  class="btn btn-orange"
+                  (click)="nextLesson()"
+                  [disabled]="!sentenceAnswerIsCorrect"
+                >
+                  {{ islastLesson ? "Back to Categories" : "Next Lesson" }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </nz-tab>
+      </nz-tabset>
+    </div>
+    <div
+      class="col-md-12 d-flex justify-content-end mt-3"
+      *ngIf="questions.length == 0 && sentences.length == 0"
+    >
+      <button class="btn btn-orange" (click)="nextLesson()">
+        {{ islastLesson ? "Back to Categories" : "Next Lesson" }}
+      </button>
+    </div>
+
+    <!-- <div class="col-md-12 questions">
+      <h2>Questions</h2>
+      <div
+        class="content my-3 p-3 rounded-2"
+        *ngFor="let question of questions; let index = index"
+      >
+        <h3>{{ question.question }}</h3>
+        <div class="choises row w-100">
+          <div
+            class="choise col-md-6 mb-3"
+            *ngFor="let answer of question.answers.$values; let i = index"
+          >
+            <a
+              (click)="checkMcqAnswer(question.id, answer.id, index, i + 1)"
+              [ngClass]="{
+                correctAnswer: isCorrect[index] && isAnswered[index] == i + 1,
+                wrongAnswer: !isCorrect[index] && isAnswered[index] == i + 1,
+                disabledAnswer: isAnswered[index]
+              }"
+            >
+              <span>{{ answer.answerText }}</span>
+            </a>
           </div>
         </div>
       </div>
+    </div> -->
 
-      <div class="col-md-12 speeking mb-3">
-        <h2>Speaking test</h2>
-        <p class="text-secondary fs-12">
-          test your speaking skill by clicking the mic and say the sentence
-        </p>
-      </div>
+    <!-- <div class="col-md-12 speeking mb-3">
+      <h2>Speaking test</h2>
+      <p class="text-secondary fs-12">
+        test your speaking skill by clicking the mic and say the sentence
+      </p>
+    </div> -->
 
-      <div
-        class="col-md-12 qustion speeking position-relative d-flex justify-content-between my-3 rounded-1 align-items-center"
-        *ngFor="let sentence of sentences; let i = index"
-      >
-        <div class="d-flex flex-column">
-          <p>Sentence : {{ sentence.sentence }}</p>
-          <p>Answer : {{ sentenceAnswer }}</p>
-        </div>
-        <i class="fa-solid fa-spinner" *ngIf="loading"></i>
-        <div *ngIf="!loading">
-          <i
-            class="fa-solid fa-microphone"
-            (click)="startService()"
-            *ngIf="!setenceAnswred"
-          ></i>
-          <i
-            class="fa-solid fa-circle-stop"
-            (click)="stop()"
-            *ngIf="setenceAnswred"
-          ></i>
-        </div>
+    <!-- <div
+      class="col-md-12 qustion speeking position-relative d-flex justify-content-between my-3 rounded-1 align-items-center"
+      *ngFor="let sentence of sentences; let i = index"
+    >
+      <div class="d-flex flex-column">
+        <p>Sentence : {{ sentence.sentence }}</p>
+        <p>Answer : {{ sentenceAnswer }}</p>
       </div>
-    </ng-container>
+      <i class="fa-solid fa-spinner" *ngIf="loading"></i>
+      <div *ngIf="!loading">
+        <i
+          class="fa-solid fa-microphone"
+          (click)="startService()"
+          *ngIf="!setenceAnswred"
+        ></i>
+        <i
+          class="fa-solid fa-circle-stop"
+          (click)="stop()"
+          *ngIf="setenceAnswred"
+        ></i>
+      </div>
+    </div> -->
   </div>
-  <app-comment
+  <!-- <app-comment
     [video_id]="video?.id"
     [comments]="video?.comments?.$values"
     (getVideo)="getVideo($event)"
-  ></app-comment>
+  ></app-comment> -->
 </div>

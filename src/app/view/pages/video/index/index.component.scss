@@ -1,6 +1,5 @@
 video {
   width: 100%;
-  height: 500px;
 }
 .features {
   width: 140px;
@@ -27,10 +26,15 @@ video {
 .overlay {
   top: 0;
   bottom: 0;
-  left: 160px;
-  right: 160px;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.322);
+  overflow: hidden;
+  transition: background-color 0.5s;
 }
-.main,
+.bg-tranparent {
+  background: transparent;
+}
 .questions,
 .speeking {
   padding: 0px 160px;
@@ -38,28 +42,17 @@ video {
 .retry,
 .play {
   position: absolute;
-  background: black;
-  width: 100%;
-  height: 100%;
-  text-decoration: none;
-  padding: 30px;
+  background: white;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
   cursor: pointer;
-  i {
-    color: gray;
-    font-size: 60px;
-  }
 }
-.retry {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-}
+.retry,
 .play {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: transparent;
 }
 
 .qustions {
@@ -80,9 +73,7 @@ video {
     }
   }
 }
-.fa-redo {
-  margin-top: 150px;
-}
+
 .mcq {
   position: relative;
 }
@@ -153,21 +144,71 @@ video {
   }
 }
 
-.fa-microphone,
-.fa-circle-stop {
-  cursor: pointer;
-}
-
 .disabledAnswer {
   pointer-events: none;
   text-decoration: none;
   color: black;
 }
+
+.main {
+  overflow: hidden;
+}
+
+.video-icon {
+  width: 20px;
+}
+
+.views {
+  border-radius: 0px 0px 12px 12px;
+}
+
+.answers {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 20px 20px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    ". ."
+    ". .";
+}
+
+.answer {
+  cursor: pointer;
+  border: 1px solid white;
+}
+
+.answer-checked {
+  border: 2px solid rgb(0, 119, 255);
+}
+
 .correctAnswer {
-  background-color: green;
-  color: white;
+  input[type="radio"] {
+    accent-color: green;
+  }
+  border: 2px solid green;
 }
 .wrongAnswer {
-  background-color: red;
-  color: white;
+  input[type="radio"] {
+    accent-color: red;
+  }
+  border: 2px solid red;
+  transition: border-color 0.5s;
+}
+
+.mic-container {
+  cursor: pointer;
+  border: 0px;
+}
+
+.mic-circle {
+  border: 2px solid #9747ff;
+  width: 45px;
+  height: 45px;
+}
+
+.fa-microphone,
+.fa-stop {
+  color: #9747ff;
+  font-size: 23px;
 }
