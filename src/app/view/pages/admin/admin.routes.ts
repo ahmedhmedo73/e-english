@@ -18,7 +18,7 @@ export const AdminRoutes: Routes = [
         component: AnswersReportsComponent,
       },
       {
-        path: 'answers-report/:id',
+        path: 'answers-report/:id/:isQuetions',
         component: AnswersReportsComponent,
       },
       {

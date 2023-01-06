@@ -14,7 +14,10 @@
       </nz-select>
     </div>
     <ng-container *ngIf="answers.length">
-      <div class="col-md-12 mb-3 mt-5">
+      <div class="col-md-6 mt-5 ps-5">
+        <app-user-card [user]="user"></app-user-card>
+      </div>
+      <div class="col-md-6 mb-5 mt-2">
         <app-doughnut-chart
           [total]="totalAnswered"
           [wrong]="totalAnsweredWrong"

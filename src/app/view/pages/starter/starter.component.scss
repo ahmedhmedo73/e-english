@@ -1,15 +1,13 @@
-.container-fluid {
-  background: #f6f9fc;
-  padding-top: 20px;
-}
 p {
   color: gray;
   font-size: 19px;
   margin-top: 160px;
 }
 .upper-des {
-  h1:first-child {
-    margin-top: 200px;
+  padding-top: 90px;
+  h1 {
+    font-size: 50px;
+    font-weight: bold;
   }
   p {
     margin-top: 30px;
@@ -43,4 +41,9 @@ p {
     color: #de1f26;
     font-weight: 500;
   }
+}
+
+.engaging {
+  background-color: rgba(239, 239, 239, 0.4);
+  padding: 70px 0px;
 }

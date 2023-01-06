@@ -1,10 +1,17 @@
 <div class="container">
   <div class="row">
-    <h3 class="m-auto">Users Accounts</h3>
-    <nz-table #basicTable [nzData]="users">
+    <h3 class="m-auto">Users</h3>
+    <!-- <nz-table #basicTable [nzData]="users">
       <thead>
         <tr>
-          <th *ngFor="let head of heads">{{ head }}</th>
+          <th
+            *ngFor="let head of heads"
+            [nzSortOrder]="'descend'"
+            [nzSortFn]="head.sortFn"
+            [nzSortDirections]="['ascend', 'descend', null]"
+          >
+            {{ head.title }}
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -16,8 +23,34 @@
           <td>{{ user.email }}</td>
           <td>{{ user.age }}</td>
           <td>{{ user.gender }}</td>
+          <td>{{ user.loginCount }}</td>
+          <td>
+            
+          </td>
+        </tr>
+      </tbody>
+    </nz-table> -->
+
+    <p-table [columns]="heads" [value]="users">
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns" [pSortableColumn]="col.key">
+            {{ col.title }}
+            <p-sortIcon [field]="col.key"></p-sortIcon>
+          </th>
+          <th>Actions</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr>
+          <td *ngFor="let col of columns">
+            {{ rowData[col.key] }}
+          </td>
           <td>
             <div class="d-flex gap-2">
+              <button class="btn btn-success" (click)="viewReport(rowData.id)">
+                Report
+              </button>
               <button
                 class="btn btn-danger"
                 nz-popconfirm
@@ -25,17 +58,14 @@
                 nzPopconfirmPlacement="top"
                 [nzOkText]="'Yes'"
                 [nzCancelText]="'No'"
-                (nzOnConfirm)="deleteUser(user.id)"
+                (nzOnConfirm)="deleteUser(rowData.id)"
               >
                 Delete
-              </button>
-              <button class="btn btn-success" (click)="viewReport(user.id)">
-                Report
               </button>
             </div>
           </td>
         </tr>
-      </tbody>
-    </nz-table>
+      </ng-template>
+    </p-table>
   </div>
 </div>

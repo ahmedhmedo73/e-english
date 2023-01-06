@@ -37,7 +37,7 @@ export class IndexComponent implements OnInit {
   setenceAnswred: boolean = false;
   isVideoPlaying: boolean = false;
 
-  currentTab: number = 3;
+  currentTab: number = 0;
   tabsLength: number = 0;
   progressBar: number = 100;
   nextPage: boolean = false;

@@ -73,6 +73,7 @@ export class VideosComponent implements OnInit {
       next: (data) => {
         this.getVideos();
         this.showAddVideoModal = false;
+        this.videoForm.reset();
       },
       error: (data) => {},
     });
@@ -108,10 +109,10 @@ export class VideosComponent implements OnInit {
 
   deleteVideo(id: number) {
     this.adminService.DeleteVideo(id).subscribe({
-      next: (data) => {},
-      error: (err) => {
+      next: (data) => {
         this.getVideos();
       },
+      error: (err) => {},
     });
   }
 

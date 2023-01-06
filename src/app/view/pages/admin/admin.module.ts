@@ -14,6 +14,7 @@ import { AnswersReportsComponent } from './answers-reports/answers-reports.compo
 import { GeneralReportComponent } from './general-report/general-report.component';
 import { QuestionsAnswersComponent } from './components/questions-answers/questions-answers.component';
 import { SentencesAnswersComponent } from './components/sentences-answers/sentences-answers.component';
+import { UserCardComponent } from './components/user-card/user-card.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { SentencesAnswersComponent } from './components/sentences-answers/senten
     DoughnutChartComponent,
     QuestionsAnswersComponent,
     SentencesAnswersComponent,
+    UserCardComponent,
   ],
   imports: [
     CommonModule,

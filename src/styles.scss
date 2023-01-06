@@ -9,10 +9,27 @@
   --orange: #ff5a57;
 }
 
+.bg-dark {
+  background-color: var(--dark2);
+}
+
+.px-7 {
+  padding: 0px 100px;
+}
+
+.text-gray {
+  color: #7d8488;
+}
+.pt-7 {
+  padding-top: 7rem !important;
+}
+
 .text-orange {
   color: var(--orange);
 }
-
+.fs-56 {
+  font-size: 56px;
+}
 .btn-orange {
   background: var(--orange);
   color: white;
@@ -35,7 +52,6 @@ body {
   position: relative;
   width: 100%;
   height: 100%;
-  background: rgba(243, 243, 243, 0.247);
 }
 p {
   margin-bottom: 0px;

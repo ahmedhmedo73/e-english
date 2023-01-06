@@ -9,15 +9,33 @@ import { UsersAccountsService } from 'src/app/core/services/users-accounts/users
 })
 export class UsersAccountsComponent implements OnInit {
   users: any;
-  heads: string[] = [
-    '#',
-    'Username',
-    'First Name',
-    'Last Name',
-    'Email',
-    'Age',
-    'Gender',
-    'Actions',
+  heads: any[] = [
+    { key: '', title: '#' },
+    { key: 'userName', title: 'Username' },
+    {
+      key: 'fname',
+      title: 'First Name',
+    },
+    {
+      key: 'lname',
+      title: 'Last Name',
+    },
+    {
+      key: 'email',
+      title: 'Email',
+    },
+    {
+      key: 'age',
+      title: 'Age',
+    },
+    {
+      key: 'gender',
+      title: 'Gender',
+    },
+    {
+      title: 'Login Count',
+      key: 'loginCount',
+    },
   ];
   constructor(
     private usersAccountsService: UsersAccountsService,

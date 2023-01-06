@@ -1,0 +1,34 @@
+<div class="user-card shadow bg-white p-3 rounded-4 d-flex flex-column">
+  <div class="user-img d-flex justify-content-center">
+    <img
+      class="shadow rounded-4"
+      [src]="
+        user?.picture
+          ? 'http://127.0.0.1:5500/' + 'wwwroot' + user.picture
+          : defaultImg
+      "
+      alt=""
+    />
+  </div>
+  <div class="user-name d-flex justify-content-center gap-2 mt-2">
+    <h5>
+      {{ user.fname }}
+    </h5>
+    <h5>
+      {{ user.lname }}
+    </h5>
+  </div>
+  <div class="user-details d-flex flex-column ps-4">
+    <div
+      class="d-flex gap-2 align-items-center"
+      *ngFor="let user_detail of user_details"
+    >
+      <i [class]="'fa-solid ' + user_detail.icon"></i>
+      <p>{{ user[user_detail.key] }}</p>
+    </div>
+    <div class="d-flex gap-2 align-items-center">
+      <i class="fa-solid fa-calendar"></i>
+      <p>{{ user.creationTime | date : "short" }}</p>
+    </div>
+  </div>
+</div>

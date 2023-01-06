@@ -1,53 +1,67 @@
-<div class="container-fluid">
+<div class="container-fluid pt-5">
   <div class="row d-flex justify-content-between">
-    <div
-      class="col-md-12 d-flex flex-wrap align-items-center justify-content-between px-3"
-    >
-      <a [routerLink]="['/']" class="d-flex align-items-center">
-        <img class="logo" src="../../../../assets/img/Logo.png" alt="" />
-      </a>
-
-      <ul class="nav d-flex justify-content-end mb-md-0">
-        <li class="about">
-          <a [routerLink]="['/AboutUs']">About Us</a>
-        </li>
-        <li>
-          <a class="btn login ms-2" [routerLink]="['/login']">Log in</a>
-        </li>
-        <li>
-          <a
-            class="btn btn-outline-dark ms-2 register"
-            [routerLink]="['/register']"
-            >Register</a
-          >
-        </li>
-      </ul>
-    </div>
-
-    <div class="col-md-5 upper-des">
+    <div class="col-md-6 upper-des px-5">
       <h1>Learn English!</h1>
       <h1>It&#39;s fun and free.</h1>
+      <img
+        src="../../../../assets/img/landing page/Vector 32.png"
+        class="w-75 my-4"
+        alt=""
+      />
       <p>
-        project-name helps you improve your English language skills on your own
-        through short video clips. <br />
-        Learning and improving English is more enjoyable than ever with
-        project-name video learning environment.
+        E-english helps you improve your English language skills on your own
+        through short video clips. Learning and improving English is more
+        enjoyable than ever.
       </p>
+      <button class="btn btn-orange mt-5 rounded-5 py-3 px-4">
+        Start learning
+      </button>
     </div>
-    <div class="col-md-6 my-5">
-      <img src="assets/starter/1.PNG" alt="" class="w-100" />
+    <div class="col-md-6 my-5 pe-4">
+      <img
+        src="assets/img/landing page/English teacher-bro.png"
+        alt=""
+        class="w-100"
+      />
     </div>
-    <div class="col-md-6 my-5">
-      <img src="assets/starter/2.PNG" alt="" class="w-100" />
+    <div class="col-md-5 pe-2 ps-4">
+      <img
+        src="assets/img/landing page/Choose-rafiki.png"
+        alt=""
+        class="w-100"
+      />
     </div>
-    <div class="col-md-4">
-      <p>
-        Find the right answer <br />
-        and score points. <br />
-        Voscreen's Gamification, Dynamic Assessment and Customization Systems
+    <div class="col-md-7 ps-4 pt-7 d-flex flex-column">
+      <span class="fs-56 lh-1">Find the right answer</span>
+      <span class="fs-56 fw-bold lh-sm">and score points.</span>
+      <span class="mt-5 text-gray fs-6">
+        E-english Gamification, Dynamic Assessment and Customization Systems
         push learners to increase their comprehension speed, to improve their
         quick reading skills and to amplify their reflexive thinking abilities.
-      </p>
+      </span>
     </div>
+    <div class="col-md-12 engaging px-5">
+      <div class="engaging-title w-100 text-center mb-5">
+        <span class="fs-3 fw-bold">Simple Engaging Process</span>
+      </div>
+      <div class="engaging-card-container row d-flex px-5">
+        <div
+          class="engaging-card d-flex flex-column gap-3 col-md-4 px-3 align-items-center"
+          *ngFor="let engagingCard of engagingCards"
+        >
+          <img [src]="engagingCard.Image" alt="" class="w-75" />
+          <span class="fs-4 fw-bold">{{ engagingCard.title }}</span>
+          <span class="text-center">{{ engagingCard.description }}</span>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="clients col-md-12 p-5">
+      <div class="clients-title w-100 text-center">
+        <span class="fs-4 fw-bold"
+          >Here is what our clients are saying About us</span
+        >
+      </div>
+    </div> -->
   </div>
 </div>
+<app-footer></app-footer>

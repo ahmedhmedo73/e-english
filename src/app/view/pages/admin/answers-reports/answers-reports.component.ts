@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { AnswersReportsService } from 'src/app/core/services/answers-reports/answers-reports.service';
 import { StatsService } from 'src/app/core/services/states/states.service';
+import { UsersAccountsService } from 'src/app/core/services/users-accounts/users-accounts.service';
 
 @Component({
   selector: 'app-answers-reports',
@@ -20,8 +21,10 @@ export class AnswersReportsComponent implements OnInit {
 
   isQuestionReport: boolean = true;
   isAnswersPage: boolean = false;
+  user: any;
   constructor(
     private answersReportsService: AnswersReportsService,
+    private usersAccountsService: UsersAccountsService,
     private statsService: StatsService,
     private activatedRoute: ActivatedRoute,
     private router: Router
@@ -29,12 +32,19 @@ export class AnswersReportsComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((data: any) => {
       this.id = data.id;
+      if (data.isQuetions) {
+        this.isQuestionReport = Boolean(data.isQuetions);
+      }
     });
     this.isAnswersPage = this.router.url.includes('answers-report');
     if (this.isAnswersPage) {
-      this.GetQuestionAnswersReport();
+      if (this.isQuestionReport) {
+        this.GetQuestionAnswersReport();
+      } else {
+      }
     } else {
       this.getQuestionAnswersReportForUser();
+      this.getUserDetails();
     }
   }
 
@@ -106,4 +116,12 @@ export class AnswersReportsComponent implements OnInit {
       });
   }
   getQuestionAnswersReport() {}
+
+  getUserDetails(): void {
+    this.usersAccountsService.GetUser(this.id).subscribe({
+      next: (response: any) => {
+        this.user = response.data;
+      },
+    });
+  }
 }
