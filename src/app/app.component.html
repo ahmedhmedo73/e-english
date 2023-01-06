@@ -1,4 +1,4 @@
-<ng-container *ngIf="!isAdmin && isLogin">
+<ng-container *ngIf="!isAdmin || !isLoginPage">
   <app-navbar></app-navbar>
 </ng-container>
 <div [ngClass]="{ 'row p-0 m-0': !hideSideBar }">
