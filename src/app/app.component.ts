@@ -35,6 +35,7 @@ export class AppComponent {
     this.authService.currentUser.subscribe({
       next: (data: any) => {
         if (data) {
+          
           this.isAdmin = data.roles == 'Admin';
         } else {
           this.isAdmin = false;

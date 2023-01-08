@@ -10,7 +10,6 @@ import { UsersAccountsService } from 'src/app/core/services/users-accounts/users
 export class UsersAccountsComponent implements OnInit {
   users: any;
   heads: any[] = [
-    { key: '', title: '#' },
     { key: 'userName', title: 'Username' },
     {
       key: 'fname',

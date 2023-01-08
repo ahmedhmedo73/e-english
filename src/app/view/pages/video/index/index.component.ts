@@ -49,6 +49,7 @@ export class IndexComponent implements OnInit {
   nextVideoName: string = '';
   categoryName: string = '';
 
+  mediaSrc = environment.mediaSrc;
   constructor(
     private store: Store,
     private adminService: AdminService,
@@ -223,5 +224,7 @@ export class IndexComponent implements OnInit {
       route = `/video/${this.categoryName}/${this.tabsService.nextVideoName}`;
     }
     this.router.navigate([route]);
+
+    console.log(this.tabsService.nextVideoName);
   }
 }

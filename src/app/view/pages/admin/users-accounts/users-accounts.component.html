@@ -34,6 +34,7 @@
     <p-table [columns]="heads" [value]="users">
       <ng-template pTemplate="header" let-columns>
         <tr>
+          <th>#</th>
           <th *ngFor="let col of columns" [pSortableColumn]="col.key">
             {{ col.title }}
             <p-sortIcon [field]="col.key"></p-sortIcon>
@@ -41,8 +42,14 @@
           <th>Actions</th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <ng-template
+        pTemplate="body"
+        let-rowData
+        let-columns="columns"
+        let-i="rowIndex"
+      >
         <tr>
+          <td>{{ i + 1 }}</td>
           <td *ngFor="let col of columns">
             {{ rowData[col.key] }}
           </td>

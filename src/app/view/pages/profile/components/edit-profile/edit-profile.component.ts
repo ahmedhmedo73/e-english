@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { UserService } from 'src/app/core/services/user/user.service';
 
@@ -15,7 +16,8 @@ export class EditProfileComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
-    private authService: AuthService
+    private authService: AuthService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -50,6 +52,12 @@ export class EditProfileComponent implements OnInit {
         next: (data) => {
           this.authService.logout();
         },
+      });
+    } else {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Edit Profile',
+        detail: 'Please fill all fields',
       });
     }
     console.log(this.form);

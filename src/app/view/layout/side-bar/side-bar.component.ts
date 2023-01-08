@@ -42,11 +42,11 @@ export class SideBarComponent implements OnInit {
       next: (data) => {
         if (data instanceof NavigationEnd) {
           this.url = data.url.split('/');
-          this.route = data.url;
+          this.route = decodeURI(data.url);
           this.isVideoPage = this.url[1] == 'video';
           if (this.isVideoPage) {
-            this.currentCategoryName = this.url[2];
-            this.currentVideoName = this.url[3];
+            this.currentCategoryName = decodeURI(this.url[2]);
+            this.currentVideoName = decodeURI(this.url[3]);
           }
         }
       },
@@ -55,6 +55,7 @@ export class SideBarComponent implements OnInit {
     this.tabsService.tabs.subscribe({
       next: (data) => {
         this.tabs = data;
+        console.log(this.tabs);
       },
     });
   }

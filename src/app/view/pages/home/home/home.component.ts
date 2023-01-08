@@ -12,21 +12,21 @@ export class HomeComponent implements OnInit {
       description:
         'Start learning English from the basics such as letters, basic words,and grammer',
       img: '../../../../../assets/img/categories/Group 1951.png',
-      firstVideo: '001',
+      firstVideo: ' Checking understanding',
     },
     {
       title: 'Intermediate',
       description:
         'Time to go beyond basics. Start adding more vocabulary and grammer to your learning journey',
       img: '../../../../../assets/img/categories/Group 1952.png',
-      firstVideo: '001',
+      firstVideo: 'Apologising',
     },
     {
       title: 'Advanced',
       description:
         'Master your English skills by adjusting your conversation skills, and vocabulary',
       img: '../../../../../assets/img/categories/Group 1953.png',
-      firstVideo: '001',
+      firstVideo: 'Agreeing and disagreeing',
     },
   ];
   constructor() {}

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { environment } from 'src/app/core/environments/environment';
 import { UserService } from 'src/app/core/services/user/user.service';
 
 @Component({
@@ -8,6 +9,7 @@ import { UserService } from 'src/app/core/services/user/user.service';
 })
 export class UserInformationComponent implements OnInit {
   user: any;
+  mediaSrc = environment.mediaSrc;
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {

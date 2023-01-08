@@ -44,8 +44,8 @@ export class TabsService {
             this.hideSideBar.next(false);
             this.isVideoPage.next(this.url[1] == 'video');
             if (this.url[1] == 'video') {
-              this.currentCategoryName = this.url[2];
-              this.currentVideoName = this.url[3];
+              this.currentCategoryName = decodeURI(this.url[2]);
+              this.currentVideoName = decodeURI(this.url[3]);
 
               this.adminService
                 .GetVideosByCategoryName(this.currentCategoryName)

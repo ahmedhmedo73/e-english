@@ -1,6 +1,6 @@
 <div class="row" *ngIf="user">
   <div class="col-md-12 mb-2" *ngIf="user.picture">
-    <img [src]="'http://127.0.0.1:5500/' + 'wwwroot' + user.picture" alt="" />
+    <img [src]="mediaSrc + user.picture" alt="" />
   </div>
   <div class="col-md-6 d-flex align-items-center">
     <h4>First Name</h4>

@@ -1,4 +1,4 @@
-<ng-container *ngIf="!isAdmin || !isLoginPage">
+<ng-container *ngIf="!isAdmin && !isLoginPage">
   <app-navbar></app-navbar>
 </ng-container>
 <div [ngClass]="{ 'row p-0 m-0': !hideSideBar }">
@@ -8,7 +8,7 @@
   <div
     class="pages"
     [ngClass]="{
-      'col-md-10 pt-5 mt-5': !hideSideBar,
+      'col-md-10 pt-5 px-5 mt-5': !hideSideBar,
       'col-md-12': hideSideBar
     }"
   >
@@ -19,3 +19,4 @@
   <app-footer></app-footer>
 </ng-container> -->
 <p-toast position="top-center"></p-toast>
+<ngx-ui-loader></ngx-ui-loader>

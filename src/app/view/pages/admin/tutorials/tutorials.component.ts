@@ -47,19 +47,11 @@ export class TutorialsComponent implements OnInit {
   }
 
   ShowAddNewListModal(category?: any) {
-    if (this.categories.length < 3) {
-      this.showAddNewListModal = true;
-      if (category) {
-        this.id = category.id;
-        this.form.reset(category);
-        this.isEdit = true;
-      }
-    } else {
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Add Category',
-        detail: "You Can't Add More Than Three Categories",
-      });
+    this.showAddNewListModal = true;
+    if (category) {
+      this.id = category.id;
+      this.form.reset(category);
+      this.isEdit = true;
     }
   }
 

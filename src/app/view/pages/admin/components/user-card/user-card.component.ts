@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { environment } from 'src/app/core/environments/environment';
 
 @Component({
   selector: 'app-user-card',
@@ -16,6 +17,7 @@ export class UserCardComponent implements OnInit {
     { key: 'gender', icon: 'fa-venus-mars' },
   ];
 
+  mediaSrc = environment.mediaSrc;
   constructor() {}
 
   ngOnInit(): void {}
