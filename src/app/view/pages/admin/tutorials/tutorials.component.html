@@ -1,7 +1,54 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12 p-0">
-      <div class="list-header p-2text-center">
+      <p-table [columns]="heads" [value]="categories">
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns">
+              {{ col }}
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template
+          pTemplate="body"
+          let-rowData
+          let-columns="columns"
+          let-i="rowIndex"
+        >
+          <tr>
+            <td>{{ i + 1 }}</td>
+            <td>{{ rowData.name }}</td>
+            <td>{{ rowData.description }}</td>
+            <td>
+              <img [src]="mediaSrc + rowData.picture" alt="" />
+            </td>
+            <td>
+              <div class="d-flex gap-2">
+                <a
+                  class="btn btn-info fs-10px text-white"
+                  [routerLink]="['/admin/video/' + rowData.id]"
+                  routerLinkActive="router-link-active"
+                  >Videos</a
+                >
+                <button
+                  class="btn btn-success fs-10px text-white"
+                  (click)="ShowAddNewListModal(rowData)"
+                >
+                  Update
+                </button>
+                <button
+                  class="btn btn-danger fs-10px text-white"
+                  (click)="deleteCategory(rowData.id)"
+                >
+                  Delete
+                </button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+
+      <!-- <div class="list-header p-2text-center">
         <h3>Categories</h3>
       </div>
       <div
@@ -29,7 +76,7 @@
             Delete
           </button>
         </div>
-      </div>
+      </div> -->
     </div>
 
     <div class="col-md-12 mt-4">
@@ -42,16 +89,29 @@
 
 <nz-modal
   [nzVisible]="showAddNewListModal"
-  nzTitle="Add New Category"
+  [nzTitle]="isEdit ? 'Update Category' : 'Add New Category'"
   [nzFooter]="null"
   [nzStyle]="{ width: '40vw' }"
   (nzOnCancel)="showAddNewListModal = false"
 >
   <ng-container *nzModalContent>
     <form [formGroup]="form" class="d-flex flex-column gap-2">
+      <div class="col-md-5">
+        <label for="gender" class="form-label">Picture</label>
+        <input
+          type="file"
+          class="form-control"
+          (change)="handleFile($event)"
+          formControlName="pictureFile"
+        />
+      </div>
       <div class="d-flex gap-2 flex-column">
-        <label class="form-label">Category Name</label>
+        <label class="form-label">Name</label>
         <input type="text" class="form-control" formControlName="name" />
+      </div>
+      <div class="d-flex gap-2 flex-column">
+        <label class="form-label">Description</label>
+        <input type="text" class="form-control" formControlName="description" />
       </div>
       <button
         class="btn btn-info text-white"

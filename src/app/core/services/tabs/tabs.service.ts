@@ -25,7 +25,7 @@ export class TabsService {
     },
     {
       title: 'Profile',
-      route: '/profile',
+      route: '/profile/personal-information',
     },
   ];
   nextVideoName: string = '';

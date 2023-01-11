@@ -13,17 +13,6 @@ import { TabsService } from 'src/app/core/services/tabs/tabs.service';
 export class SideBarComponent implements OnInit {
   tabs: any;
 
-  defaultTabs: any = [
-    {
-      title: 'Classroom',
-      route: '/home',
-    },
-    {
-      title: 'Profile',
-      route: '/profile',
-    },
-  ];
-
   route: string = '';
   isVideoPage: boolean = false;
   currentCategoryName: string = '';
@@ -43,6 +32,8 @@ export class SideBarComponent implements OnInit {
         if (data instanceof NavigationEnd) {
           this.url = data.url.split('/');
           this.route = decodeURI(data.url);
+          console.log(this.route);
+
           this.isVideoPage = this.url[1] == 'video';
           if (this.isVideoPage) {
             this.currentCategoryName = decodeURI(this.url[2]);

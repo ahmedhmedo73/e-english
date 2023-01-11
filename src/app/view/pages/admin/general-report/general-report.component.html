@@ -26,9 +26,20 @@
         <p>{{ reports.totalUsers }}</p>
       </div>
     </div>
+
+    <div class="col-md-12 my-5">
+      <canvas
+        baseChart
+        [options]="LineChartOptions"
+        [data]="LineChartDatasets"
+        [type]="'line'"
+        style="width: 100%"
+      >
+      </canvas>
+    </div>
     <div class="col-md-12 d-flex mt-5">
       <nz-table
-        class="border border-1"
+        class="border border-1 w-25"
         [nzShowPagination]="false"
         [nzData]="wrongSentenceAnswers"
       >
@@ -48,7 +59,7 @@
         </tbody>
       </nz-table>
       <nz-table
-        class="border border-1"
+        class="border border-1 w-25"
         [nzShowPagination]="false"
         [nzData]="rightSentenceAnswers"
       >
@@ -68,7 +79,7 @@
         </tbody>
       </nz-table>
       <nz-table
-        class="border border-1"
+        class="border border-1 w-25"
         [nzShowPagination]="false"
         [nzData]="wrongQuestionsAnswers"
       >
@@ -88,7 +99,7 @@
         </tbody>
       </nz-table>
       <nz-table
-        class="border border-1"
+        class="border border-1 w-25"
         [nzShowPagination]="false"
         [nzData]="rightQuestionsAnswers"
       >
@@ -107,16 +118,6 @@
           </tr>
         </tbody>
       </nz-table>
-    </div>
-    <div class="col-md-12 my-5">
-      <canvas
-        baseChart
-        [options]="LineChartOptions"
-        [data]="LineChartDatasets"
-        [type]="'line'"
-        style="width: 100%"
-      >
-      </canvas>
     </div>
   </div>
 </div>

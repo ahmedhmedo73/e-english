@@ -178,7 +178,7 @@ export class IndexComponent implements OnInit {
     if (this.speech.text)
       this.quizService
         .answerSentence({
-          videoId: 22,
+          videoId: this.video.id,
           sentenceUserAnswer: this.speech.text.trim(),
         })
         .subscribe({
@@ -225,6 +225,10 @@ export class IndexComponent implements OnInit {
     }
     this.router.navigate([route]);
 
-    console.log(this.tabsService.nextVideoName);
+    this.currentTab = 0;
+    this.sentenceAnswer = '';
+    this.isCorrect = [];
+    this.isAnswered = [];
+    this.sentenceAnswerIsCorrect = false;
   }
 }

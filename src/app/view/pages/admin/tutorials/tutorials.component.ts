@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
+import { environment } from 'src/app/core/environments/environment';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { CategoriesService } from 'src/app/core/services/categories/categories.service';
 import { AdminService } from '../../../../core/services/admin/admin.service';
@@ -19,6 +20,10 @@ export class TutorialsComponent implements OnInit {
   isEdit!: boolean;
   id: any;
 
+  heads = ['#', 'Name', 'Description', 'Image', 'Actions'];
+  mediaSrc = environment.mediaSrc;
+  img: any;
+
   constructor(
     private formBuilder: FormBuilder,
     private adminService: AdminService,
@@ -35,6 +40,8 @@ export class TutorialsComponent implements OnInit {
   createForm() {
     this.form = this.formBuilder.group({
       name: ['', Validators.required],
+      description: ['', Validators.required],
+      pictureFile: ['', Validators.required],
     });
   }
 
@@ -52,12 +59,20 @@ export class TutorialsComponent implements OnInit {
       this.id = category.id;
       this.form.reset(category);
       this.isEdit = true;
+    } else {
+      this.isEdit = false;
     }
   }
 
   addCategory() {
     if (this.form.valid) {
-      this.categoriesService.CreateCategory(this.form.value).subscribe({
+      let formData = new FormData();
+      let values = this.form.value;
+      formData.append('name', values.name);
+      formData.append('description', values.description);
+      formData.append('pictureFile', this.img);
+
+      this.categoriesService.CreateCategory(formData).subscribe({
         next: (data) => {
           this.get();
           this.showAddNewListModal = false;
@@ -76,17 +91,24 @@ export class TutorialsComponent implements OnInit {
   }
 
   updateCategory() {
-    if (this.form.valid) {
-      this.categoriesService
-        .UpdateCategory({ id: this.id, ...this.form.value })
-        .subscribe({
-          next: (data) => {
-            this.showAddNewListModal = false;
-            this.form.reset();
-            this.isEdit = false;
-            this.get();
-          },
-        });
-    }
+    let formData = new FormData();
+    let values = this.form.value;
+    formData.append('id', this.id);
+    formData.append('name', values.name);
+    formData.append('description', values.description);
+    formData.append('pictureFile', this.img);
+
+    this.categoriesService.UpdateCategory(formData).subscribe({
+      next: (data) => {
+        this.showAddNewListModal = false;
+        this.form.reset();
+        this.isEdit = false;
+        this.get();
+      },
+    });
+  }
+
+  handleFile(event: any) {
+    this.img = event.target.files[0];
   }
 }

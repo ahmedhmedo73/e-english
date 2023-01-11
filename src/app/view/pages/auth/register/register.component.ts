@@ -56,6 +56,7 @@ export class RegisterComponent implements OnInit {
             detail: 'Welcome 😁',
           });
           localStorage.setItem('token', response.token);
+          this._AuthService.saveCurrentUser();
           this._Router.navigate(['/home']);
         },
         error: (response: any) => {

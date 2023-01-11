@@ -45,9 +45,9 @@
         <a
           class="link-dark text-decoration-none dropdown-toggle d-flex align-items-center justify-content-between border border-1 person-container p-2 py-1 rounded-1"
           id="dropdownUser1"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
         >
-          <!-- data-bs-toggle="dropdown"
-          aria-expanded="false" -->
           <div class="d-flex align-items-center">
             <img
               src="../../../../assets/icons/person2.PNG"
@@ -60,13 +60,18 @@
               <p class="text-secondary">Score: {{ score }}</p>
             </div>
           </div>
-          <!-- <img
+          <img
             class="arrow-down-icon"
             src="../../../../assets/icons/arrow-down.PNG"
             alt=""
-          /> -->
+          />
         </a>
-        <!-- <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+        <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+          <li>
+            <a class="dropdown-item" [routerLink]="['/home']"
+              ><i class="fa-solid fa-home"></i>Home</a
+            >
+          </li>
           <li>
             <a
               class="dropdown-item"
@@ -74,28 +79,28 @@
               ><i class="fa-solid fa-user"></i>Profile</a
             >
           </li>
-          <li>
+          <!-- <li>
             <a class="dropdown-item" [routerLink]="['/profile/playlists']"
               ><i class="fa-solid fa-bars"></i> PlayLists</a
             >
-          </li>
-          <li>
+          </li> -->
+          <!-- <li>
             <a class="dropdown-item" [routerLink]="['/profile/stats']"
               ><i class="fa-solid fa-chart-line"></i> Stats</a
             >
-          </li>
-          <li>
+          </li> -->
+          <!-- <li>
             <a class="dropdown-item" [routerLink]="['/profile/rank']"
               ><i class="fa-solid fa-chart-simple"></i> Score & Rank</a
             >
-          </li>
+          </li> -->
           <li><hr class="dropdown-divider" /></li>
           <li>
             <a class="dropdown-item" style="cursor: pointer" (click)="signOut()"
               ><i class="fa-solid fa-right-from-bracket"></i> Sign Out</a
             >
           </li>
-        </ul> -->
+        </ul>
       </div>
     </div>
   </div>

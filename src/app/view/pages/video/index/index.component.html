@@ -1,8 +1,13 @@
 <div class="container">
   <div class="row" *ngIf="video">
     <div class="col-md-12 main position-relative p-0 rounded rounded-2">
-      <video [src]="mediaSrc + video?.link_Vid" type="video/mp4"></video>
-      <div
+      <!-- src="../../../../../assets/mov_bbb.mp4"  -->
+      <video
+        [src]="mediaSrc + video?.link_Vid"
+        type="video/mp4"
+        controls
+      ></video>
+      <!-- <div
         class="overlay position-absolute h-100 d-flex justify-content-center align-items-center"
         [ngClass]="{ 'bg-tranparent': isVideoPlaying }"
       >
@@ -20,7 +25,7 @@
         >
           <i class="fas fa-redo text-dark"></i>
         </a>
-      </div>
+      </div> -->
     </div>
     <div
       class="col-md-12 d-flex flex-column px-4 py-2 bg-white views shadow-sm"
@@ -50,7 +55,7 @@
           <div class="container">
             <div class="row">
               <div class="col-md-12 d-flex justify-content-center py-5">
-                <h3>{{ question.question }}?</h3>
+                <h3>{{ question.question }}</h3>
               </div>
               <div class="col-md-12 answers px-4 mb-5">
                 <label

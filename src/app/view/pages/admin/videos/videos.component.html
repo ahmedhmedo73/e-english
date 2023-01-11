@@ -21,7 +21,7 @@
           </td>
           <td>
             <button
-              class="btn btn-info fs-10px text-white"
+              class="btn btn-info fs-10px text-white m-auto"
               (click)="openQuistionsModal(video.id)"
             >
               <i class="fa-solid fa-eye"></i>
@@ -130,9 +130,9 @@
         </div>
       </div>
       <p *ngIf="!questions" class="text-center">there is no quistions 😥</p>
-      <div class="questions-container">
+      <div class="questions-container w-100">
         <div
-          class="row quistion-card rounded-2 py-2 mb-2"
+          class="row quistion-card py-2 m-0 mb-2"
           *ngFor="let question of questions"
         >
           <div class="col-md-12 mb-3">
@@ -151,12 +151,12 @@
           <div
             class="col-md-12 d-flex align-items-center justify-content-end gap-2"
           >
-            <a
+            <!-- <a
               class="btn btn-info"
               [routerLink]="['/answers-report/' + question.id + '/' + true]"
             >
               Report
-            </a>
+            </a> -->
 
             <button
               class="btn btn-danger text-white fs-10px"

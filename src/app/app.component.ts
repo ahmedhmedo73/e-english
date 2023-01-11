@@ -3,6 +3,8 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AuthService } from './core/services/auth/auth.service';
 import { TabsService } from './core/services/tabs/tabs.service';
 
+import * as AOS from 'aos';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -20,6 +22,8 @@ export class AppComponent {
   ) {}
 
   ngOnInit(): void {
+    AOS.init();
+
     this.router.events.subscribe({
       next: (data) => {
         if (data instanceof NavigationEnd) {
@@ -35,7 +39,6 @@ export class AppComponent {
     this.authService.currentUser.subscribe({
       next: (data: any) => {
         if (data) {
-          
           this.isAdmin = data.roles == 'Admin';
         } else {
           this.isAdmin = false;

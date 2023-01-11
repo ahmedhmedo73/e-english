@@ -22,16 +22,22 @@ export class EditProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
+    this.userService.GetUserInfo().subscribe({
+      next: (response: any) => {
+        this.form.patchValue(response.data);
+        console.log(response.data);
+      },
+    });
   }
 
   createForm(): void {
     this.form = this.formBuilder.group({
       fname: ['', Validators.required],
-      Lname: ['', Validators.required],
-      Username: ['', Validators.required],
-      Email: ['', Validators.required],
-      Gender: ['', Validators.required],
-      Age: ['', Validators.required],
+      lname: ['', Validators.required],
+      username: ['', Validators.required],
+      email: ['', Validators.required],
+      gender: ['', Validators.required],
+      age: ['', Validators.required],
       pictureFile: ['', Validators.required],
     });
   }
@@ -41,11 +47,11 @@ export class EditProfileComponent implements OnInit {
       let formData = new FormData();
       let values = this.form.value;
       formData.append('fname', values.fname);
-      formData.append('Lname', values.Lname);
-      formData.append('Username', values.Username);
-      formData.append('Email', values.Email);
-      formData.append('Gender', values.Gender);
-      formData.append('Age', values.Age);
+      formData.append('Lname', values.lname);
+      formData.append('username', values.username);
+      formData.append('Email', values.email);
+      formData.append('Gender', values.gender);
+      formData.append('Age', values.age);
       formData.append('pictureFile', this.img);
 
       this.userService.EditProfile(formData).subscribe({

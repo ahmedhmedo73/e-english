@@ -1,18 +1,21 @@
 <div class="container">
-  <div class="category row mb-5" *ngFor="let category of categories">
+  <div
+    class="category row mb-5"
+    *ngFor="let category of categories; let i = index"
+  >
     <div class="col-md-9 d-flex flex-column gap-4">
-      <span class="category-title"> {{ category.title }} </span>
+      <span class="category-title"> {{ category.name }} </span>
       <span class="category-description">{{ category.description }}</span>
       <a
         class="continue text-decoration-none d-flex justify-content-between align-items-center"
-        [routerLink]="'/video/' + category.title + '/' + category.firstVideo"
+        [routerLink]="'/video/' + category.name + '/' + firstVideo[i]"
       >
         <span> Continue </span>
         <i class="fa-solid fa-arrow-right"></i>
       </a>
     </div>
     <div class="col-md-3">
-      <img [src]="category.img" alt="" />
+      <img [src]="mediaSrc + category.picture" alt="" />
     </div>
   </div>
 </div>

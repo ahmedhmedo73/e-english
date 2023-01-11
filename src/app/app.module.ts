@@ -52,7 +52,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   gap: 81,
   logoPosition: 'center-center',
   logoSize: 500,
-  logoUrl: 'assets/gif/image_processing20220115-31097-164ehmx.gif',
+  logoUrl: '../assets/gif/image_processing20220115-31097-164ehmx.jpg',
   masterLoaderId: 'master',
   overlayBorderRadius: '0',
   overlayColor: '#fbfbfb',
